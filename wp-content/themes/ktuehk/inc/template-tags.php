@@ -49,7 +49,7 @@ function ktuehk_icon( $name, $size = 20, $class = '' ) {
  */
 function ktuehk_brand( $context = 'header' ) {
 	$name     = get_bloginfo( 'name' );
-	$is_dark  = 'footer' === $context || 'light' !== get_theme_mod( 'ktuehk_header_style', 'blue' );
+	$is_dark  = 'footer' === $context || 'blue' === ktuehk_header_style();
 	$logo_id  = (int) get_theme_mod( 'custom_logo' );
 	$dark_id  = (int) get_theme_mod( 'ktuehk_logo_dark' );
 	$image_id = $logo_id;
@@ -85,15 +85,16 @@ function ktuehk_brand( $context = 'header' ) {
 }
 
 /**
- * Small brand mark: a signal wave on a chip-like tile.
+ * Brand mark: an open ring (radiation pattern) around an arch-shaped
+ * antenna element. Drawn with currentColor so it adapts to light and dark
+ * backgrounds.
  *
  * @return string
  */
 function ktuehk_brand_mark() {
-	return '<svg class="brand__mark" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true" focusable="false">'
-		. '<rect class="brand__mark-bg" width="40" height="40" rx="9"/>'
-		. '<path class="brand__mark-pins" d="M13 4v3M20 4v3M27 4v3M13 33v3M20 33v3M27 33v3"/>'
-		. '<path class="brand__mark-wave" d="M7 20c2.2-6.5 4.4-6.5 6.6 0s4.4 6.5 6.6 0 4.4-6.5 6.6 0 4.4 6.5 6.6 0"/>'
+	return '<svg class="brand__mark" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" aria-hidden="true" focusable="false">'
+		. '<path d="M12.2 35.6A16.5 16.5 0 1 1 27.8 35.6" stroke-width="4.4" stroke-linecap="round"/>'
+		. '<path d="M14.6 38V22.6a5.4 5.4 0 0 1 10.8 0V38" stroke-width="4.4"/>'
 		. '</svg>';
 }
 
@@ -139,19 +140,6 @@ function ktuehk_about_page() {
 }
 
 /**
- * The existing contact page, if any (kept as-is; only linked).
- *
- * @return WP_Post|null
- */
-function ktuehk_contact_page() {
-	static $page = false;
-	if ( false === $page ) {
-		$page = ktuehk_find_page( array( 'iletisim', 'bize-ulasin', 'contact' ) );
-	}
-	return $page;
-}
-
-/**
  * URL of the posts listing ("Yazılar").
  *
  * @return string
@@ -165,12 +153,14 @@ function ktuehk_posts_url() {
 }
 
 /**
- * Default navigation items (used when no menu is assigned).
+ * Default navigation items (used when no menu is assigned): Ana Sayfa,
+ * Yazılar, Projeler, Etkinlikler, Hakkımızda. A menu created under
+ * Görünüm › Menüler (for example one that also links the contact page)
+ * replaces these.
  *
- * @param bool $with_contact Include the contact page link.
  * @return array<int,array{label:string,url:string,current:bool}>
  */
-function ktuehk_default_menu_items( $with_contact = true ) {
+function ktuehk_default_menu_items() {
 	$project = ktuehk_project_type();
 	$event   = ktuehk_event_type();
 	$items   = array(
@@ -207,14 +197,6 @@ function ktuehk_default_menu_items( $with_contact = true ) {
 			'current' => is_page( $about->ID ),
 		);
 	}
-	$contact = $with_contact ? ktuehk_contact_page() : null;
-	if ( $contact ) {
-		$items[] = array(
-			'label'   => get_the_title( $contact ),
-			'url'     => (string) get_permalink( $contact ),
-			'current' => is_page( $contact->ID ),
-		);
-	}
 	return (array) apply_filters( 'ktuehk_default_menu_items', $items );
 }
 
@@ -236,6 +218,15 @@ function ktuehk_menu_fallback( $args ) {
 		);
 	}
 	echo '</ul>';
+}
+
+/**
+ * Footer quick links fallback (same items as the main menu).
+ *
+ * @param array $args wp_nav_menu() arguments.
+ */
+function ktuehk_footer_menu_fallback( $args ) {
+	ktuehk_menu_fallback( $args );
 }
 
 /**
@@ -279,7 +270,7 @@ function ktuehk_post_meta( $parts = array( 'author', 'date', 'reading' ), $post 
 			case 'date':
 				printf(
 					'<li class="meta__item">%1$s<span class="screen-reader-text">%2$s </span><time datetime="%3$s">%4$s</time></li>',
-					ktuehk_icon( 'calendar-days', 16 ), // phpcs:ignore WordPress.Security.EscapeOutput
+					ktuehk_icon( 'calendar', 16 ), // phpcs:ignore WordPress.Security.EscapeOutput
 					esc_html__( 'Yayın tarihi:', 'ktuehk' ),
 					esc_attr( get_the_date( 'c', $post ) ),
 					esc_html( get_the_date( '', $post ) )
@@ -291,6 +282,15 @@ function ktuehk_post_meta( $parts = array( 'author', 'date', 'reading' ), $post 
 					ktuehk_icon( 'clock', 16 ), // phpcs:ignore WordPress.Security.EscapeOutput
 					/* translators: %d: minutes */
 					esc_html( sprintf( __( '%d dk okuma', 'ktuehk' ), ktuehk_reading_time( $post ) ) )
+				);
+				break;
+			case 'reading_short':
+				printf(
+					'<li class="meta__item">%1$s<span class="screen-reader-text">%2$s </span>%3$s</li>',
+					ktuehk_icon( 'clock', 16 ), // phpcs:ignore WordPress.Security.EscapeOutput
+					esc_html__( 'Tahmini okuma süresi:', 'ktuehk' ),
+					/* translators: %d: minutes */
+					esc_html( sprintf( __( '%d dk', 'ktuehk' ), ktuehk_reading_time( $post ) ) )
 				);
 				break;
 		}
@@ -447,6 +447,23 @@ function ktuehk_section_head( $args ) {
 }
 
 /**
+ * Uppercase that respects Turkish dotted/dotless i ("Eki" → "EKİ") and
+ * works without the mbstring extension.
+ *
+ * @param string $text Text.
+ * @return string
+ */
+function ktuehk_upper( $text ) {
+	if ( 0 === strpos( determine_locale(), 'tr' ) ) {
+		$text = strtr( $text, array( 'i' => 'İ', 'ı' => 'I' ) );
+	}
+	if ( function_exists( 'mb_strtoupper' ) ) {
+		return mb_strtoupper( $text, 'UTF-8' );
+	}
+	return strtoupper( strtr( $text, array( 'ç' => 'Ç', 'ğ' => 'Ğ', 'ö' => 'Ö', 'ş' => 'Ş', 'ü' => 'Ü' ) ) );
+}
+
+/**
  * Event date pieces in the site timezone and language.
  *
  * @param int|WP_Post|null $post Post.
@@ -467,7 +484,7 @@ function ktuehk_event_date( $post = null ) {
 		'start'   => $start,
 		'end'     => $end,
 		'day'     => wp_date( 'j', $ts ),
-		'month'   => wp_date( 'M', $ts ),
+		'month'   => ktuehk_upper( wp_date( 'M', $ts ) ),
 		'year'    => wp_date( 'Y', $ts ),
 		'weekday' => wp_date( 'l', $ts ),
 		'time'    => $all_day ? '' : wp_date( 'H:i', $ts ),
@@ -505,6 +522,24 @@ function ktuehk_event_when( $post = null ) {
 		}
 	}
 	return $text;
+}
+
+/**
+ * Event time range, e.g. "14:00–17:00" (empty for all-day events).
+ *
+ * @param int|WP_Post|null $post Post.
+ * @return string
+ */
+function ktuehk_event_time_range( $post = null ) {
+	$date = ktuehk_event_date( $post );
+	if ( ! $date || $date['all_day'] ) {
+		return '';
+	}
+	$range = $date['time'];
+	if ( $date['end'] && $date['end']->format( 'Y-m-d' ) === $date['start']->format( 'Y-m-d' ) ) {
+		$range .= '–' . wp_date( 'H:i', $date['end']->getTimestamp() );
+	}
+	return $range;
 }
 
 /**

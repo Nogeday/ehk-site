@@ -21,50 +21,50 @@ function ktuehk_focus_areas() {
 	$areas = array(
 		array(
 			'title' => __( 'Elektronik', 'ktuehk' ),
-			'text'  => __( 'Analog ve dijital devre tasarımı, ölçüm ve prototipleme.', 'ktuehk' ),
-			'icon'  => 'zap',
+			'text'  => __( 'Devre tasarımı, analog/dijital sistemler ve ölçüm teknikleri.', 'ktuehk' ),
+			'icon'  => 'cpu',
 			'slugs' => array( 'elektronik' ),
 		),
 		array(
 			'title' => __( 'Haberleşme', 'ktuehk' ),
-			'text'  => __( 'Modülasyon, kablosuz haberleşme ve haberleşme sistemleri.', 'ktuehk' ),
+			'text'  => __( 'Kablosuz ve kablolu haberleşme sistemleri, modülasyon, kodlama.', 'ktuehk' ),
 			'icon'  => 'radio-tower',
 			'slugs' => array( 'haberlesme', 'haberlesme-sistemleri' ),
 		),
 		array(
 			'title' => __( 'RF & Anten', 'ktuehk' ),
-			'text'  => __( 'Anten tasarımı, RF devreleri ve elektromanyetik simülasyon.', 'ktuehk' ),
-			'icon'  => 'antenna',
+			'text'  => __( 'RF devreleri, anten tasarımı ve radyo frekans sistemleri.', 'ktuehk' ),
+			'icon'  => 'radio',
 			'slugs' => array( 'rf-ve-anten', 'rf-anten', 'rf', 'anten' ),
 		),
 		array(
 			'title' => __( 'Gömülü Sistemler', 'ktuehk' ),
-			'text'  => __( 'Mikrodenetleyiciler, gerçek zamanlı yazılım ve sensör sistemleri.', 'ktuehk' ),
-			'icon'  => 'cpu',
+			'text'  => __( 'Mikrodenetleyiciler, RTOS, gömülü yazılım ve sensörler.', 'ktuehk' ),
+			'icon'  => 'square-code',
 			'slugs' => array( 'gomulu-sistemler', 'mikrodenetleyiciler' ),
 		),
 		array(
-			'title' => __( 'PCB Tasarımı', 'ktuehk' ),
-			'text'  => __( 'Şematikten üretime baskı devre kartı tasarımı.', 'ktuehk' ),
+			'title' => __( 'PCB', 'ktuehk' ),
+			'text'  => __( 'PCB tasarımı, üretim, montaj ve test süreçleri.', 'ktuehk' ),
 			'icon'  => 'circuit-board',
 			'slugs' => array( 'pcb-tasarimi', 'pcb' ),
 		),
 		array(
 			'title' => __( 'Ağ & Siber Güvenlik', 'ktuehk' ),
-			'text'  => __( 'Ağ altyapıları, Linux, protokoller ve güvenlik.', 'ktuehk' ),
-			'icon'  => 'shield-check',
+			'text'  => __( 'Ağ teknolojileri, Linux altyapıları ve güvenlik.', 'ktuehk' ),
+			'icon'  => 'shield',
 			'slugs' => array( 'ag-ve-siber-guvenlik', 'siber-guvenlik', 'ag-teknolojileri' ),
 		),
 		array(
 			'title' => __( 'IoT', 'ktuehk' ),
-			'text'  => __( 'Bağlı cihazlar, sensör ağları ve bulut entegrasyonu.', 'ktuehk' ),
-			'icon'  => 'wifi',
+			'text'  => __( 'Nesnelerin interneti, sensör ağları ve bulut entegrasyonu.', 'ktuehk' ),
+			'icon'  => 'cloud',
 			'slugs' => array( 'iot', 'nesnelerin-interneti' ),
 		),
 		array(
 			'title' => __( 'Sinyal İşleme', 'ktuehk' ),
-			'text'  => __( 'Sayısal sinyal işleme, filtre tasarımı ve analiz.', 'ktuehk' ),
-			'icon'  => 'audio-waveform',
+			'text'  => __( 'Dijital sinyal işleme, filtreleme ve veri analizi.', 'ktuehk' ),
+			'icon'  => 'activity',
 			'slugs' => array( 'sinyal-isleme' ),
 		),
 	);
@@ -135,34 +135,6 @@ function ktuehk_offerings() {
 				'title' => __( 'Sektör ve akademiyle bağ', 'ktuehk' ),
 				'text'  => __( 'Söyleşi, seminer ve teknik gezilerle mühendislik dünyasını yakından tanıma.', 'ktuehk' ),
 				'icon'  => 'handshake',
-			),
-		)
-	);
-}
-
-/**
- * Short pillars used in the home "Biz kimiz?" section.
- *
- * @return array
- */
-function ktuehk_pillars() {
-	return (array) apply_filters(
-		'ktuehk_pillars',
-		array(
-			array(
-				'title' => __( 'Üretiyoruz', 'ktuehk' ),
-				'text'  => __( 'Devreler, prototipler ve yazılımlar geliştiriyor; fikirleri çalışan sistemlere dönüştürüyoruz.', 'ktuehk' ),
-				'icon'  => 'circuit-board',
-			),
-			array(
-				'title' => __( 'Araştırıyoruz', 'ktuehk' ),
-				'text'  => __( 'Haberleşme, RF, gömülü sistemler ve ağ teknolojilerinde yeni yaklaşımları inceliyoruz.', 'ktuehk' ),
-				'icon'  => 'flask-conical',
-			),
-			array(
-				'title' => __( 'Paylaşıyoruz', 'ktuehk' ),
-				'text'  => __( 'Öğrendiklerimizi teknik yazılar, eğitimler ve etkinliklerle topluluğa aktarıyoruz.', 'ktuehk' ),
-				'icon'  => 'book-open',
 			),
 		)
 	);

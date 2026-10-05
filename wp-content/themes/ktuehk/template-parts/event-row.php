@@ -1,6 +1,6 @@
 <?php
 /**
- * Upcoming event row (wide layout with date block and actions).
+ * Upcoming event row (events archive): date tile, details and actions.
  * Use inside the loop.
  *
  * @package KTUEHK
@@ -16,17 +16,17 @@ $ktuehk_signup = ktuehk_field( 'kayit' );
 ?>
 <article <?php post_class( 'event-row' ); ?>>
 	<?php if ( $ktuehk_date ) : ?>
-		<time class="event-row__date" datetime="<?php echo esc_attr( $ktuehk_date['iso'] ); ?>">
-			<span class="event-row__day"><?php echo esc_html( $ktuehk_date['day'] ); ?></span>
-			<span class="event-row__month"><?php echo esc_html( $ktuehk_date['month'] . ' ' . $ktuehk_date['year'] ); ?></span>
-			<span class="event-row__weekday"><?php echo esc_html( $ktuehk_date['weekday'] ); ?></span>
+		<time class="date-tile" datetime="<?php echo esc_attr( $ktuehk_date['iso'] ); ?>">
+			<span class="date-tile__day"><?php echo esc_html( $ktuehk_date['day'] ); ?></span>
+			<span class="date-tile__month"><?php echo esc_html( $ktuehk_date['month'] ); ?></span>
+			<span class="date-tile__year"><?php echo esc_html( $ktuehk_date['year'] ); ?></span>
 		</time>
 	<?php endif; ?>
 	<div class="event-row__body">
-		<p class="card__eyebrow">
+		<p class="card__badges">
 			<span class="badge badge--green"><?php esc_html_e( 'Yaklaşan', 'ktuehk' ); ?></span>
 			<?php if ( $ktuehk_type ) : ?>
-				<span class="badge"><?php echo esc_html( $ktuehk_type->name ); ?></span>
+				<span class="badge badge--blue"><?php echo esc_html( $ktuehk_type->name ); ?></span>
 			<?php endif; ?>
 		</p>
 		<h3 class="event-row__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>

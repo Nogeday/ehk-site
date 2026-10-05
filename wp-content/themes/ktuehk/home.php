@@ -10,14 +10,14 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 
 $ktuehk_page_id = (int) get_option( 'page_for_posts' );
-$ktuehk_title   = $ktuehk_page_id ? get_the_title( $ktuehk_page_id ) : __( 'Yazılar', 'ktuehk' );
+$ktuehk_title   = __( 'Teknik Yazılar', 'ktuehk' );
 $ktuehk_desc    = $ktuehk_page_id && has_excerpt( $ktuehk_page_id ) ? get_the_excerpt( $ktuehk_page_id ) : ktuehk_mod( 'intro_posts' );
 
 get_template_part(
 	'template-parts/page-header',
 	null,
 	array(
-		'eyebrow' => __( 'Teknik içerik', 'ktuehk' ),
+		'eyebrow' => __( 'YAZILAR', 'ktuehk' ),
 		'title'   => $ktuehk_title,
 		'desc'    => $ktuehk_desc,
 		'after'   => static function () {

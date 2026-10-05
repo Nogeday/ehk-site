@@ -46,7 +46,7 @@ get_template_part(
 	'template-parts/page-header',
 	null,
 	array(
-		'eyebrow' => __( 'Arama', 'ktuehk' ),
+		'eyebrow' => __( 'ARAMA', 'ktuehk' ),
 		/* translators: %s: search query */
 		'title'   => '' !== $ktuehk_query ? sprintf( __( '"%s" için sonuçlar', 'ktuehk' ), $ktuehk_query ) : __( 'Sitede ara', 'ktuehk' ),
 		'class'   => 'page-hero--search',

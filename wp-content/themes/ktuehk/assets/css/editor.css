@@ -2,48 +2,58 @@
  * KTÜ EHK — block editor styles.
  * WordPress scopes these rules to the editor canvas (.editor-styles-wrapper),
  * so writing an article looks like the published page.
+ * Colours mirror the tokens in main.css.
  */
 
 @font-face {
-	font-family: "IBM Plex Sans";
+	font-family: "Inter";
 	font-style: normal;
-	font-weight: 100 700;
+	font-weight: 100 900;
 	font-display: swap;
-	src: url("../fonts/ibm-plex-sans-latin-wght-normal.woff2") format("woff2");
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-	font-family: "IBM Plex Sans";
-	font-style: normal;
-	font-weight: 100 700;
-	font-display: swap;
-	src: url("../fonts/ibm-plex-sans-latin-ext-wght-normal.woff2") format("woff2");
+	src: url("../fonts/inter-latin-ext-wght-normal.woff2") format("woff2");
 	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
-	font-family: "IBM Plex Sans";
-	font-style: italic;
-	font-weight: 100 700;
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 100 900;
 	font-display: swap;
-	src: url("../fonts/ibm-plex-sans-latin-wght-italic.woff2") format("woff2");
+	src: url("../fonts/inter-latin-wght-normal.woff2") format("woff2");
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-	font-family: "IBM Plex Sans";
-	font-style: italic;
-	font-weight: 100 700;
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 100 900;
 	font-display: swap;
-	src: url("../fonts/ibm-plex-sans-latin-ext-wght-italic.woff2") format("woff2");
+	src: url("../fonts/inter-tr-wght-normal.woff2") format("woff2");
+	unicode-range: U+011E-011F, U+0130, U+015E-015F;
+}
+@font-face {
+	font-family: "Inter";
+	font-style: italic;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url("../fonts/inter-latin-ext-wght-italic.woff2") format("woff2");
 	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
-	font-family: "IBM Plex Mono";
-	font-style: normal;
-	font-weight: 400;
+	font-family: "Inter";
+	font-style: italic;
+	font-weight: 100 900;
 	font-display: swap;
-	src: url("../fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+	src: url("../fonts/inter-latin-wght-italic.woff2") format("woff2");
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+@font-face {
+	font-family: "Inter";
+	font-style: italic;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url("../fonts/inter-tr-wght-italic.woff2") format("woff2");
+	unicode-range: U+011E-011F, U+0130, U+015E-015F;
+}
+/* Monospace for code only. */
 @font-face {
 	font-family: "IBM Plex Mono";
 	font-style: normal;
@@ -55,23 +65,15 @@
 @font-face {
 	font-family: "IBM Plex Mono";
 	font-style: normal;
-	font-weight: 500;
+	font-weight: 400;
 	font-display: swap;
-	src: url("../fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+	src: url("../fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-	font-family: "IBM Plex Mono";
-	font-style: normal;
-	font-weight: 500;
-	font-display: swap;
-	src: url("../fonts/ibm-plex-mono-latin-ext-500-normal.woff2") format("woff2");
-	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 body {
-	color: #1f2a3a;
-	font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+	color: #263042;
+	font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 	font-size: 18px;
 	line-height: 1.75;
 }
@@ -84,37 +86,37 @@ body {
 
 .editor-post-title__input,
 .wp-block-post-title {
-	color: #0a1f3d;
+	color: #0b2a59;
 	font-size: 2.5rem;
-	font-weight: 700;
-	letter-spacing: -0.02em;
+	font-weight: 800;
+	letter-spacing: -0.025em;
 	line-height: 1.15;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: #0a1f3d;
-	font-weight: 650;
+	color: #0b2a59;
+	font-weight: 700;
 	letter-spacing: -0.01em;
 	line-height: 1.25;
 }
-h2 { font-size: 1.75rem; font-weight: 700; margin-top: 2em; }
+h2 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; margin-top: 2em; }
 h3 { font-size: 1.35rem; margin-top: 1.6em; }
 h4 { font-size: 1.1rem; }
 
 a {
-	color: #0b4a96;
+	color: #1f5fbf;
 	text-decoration-thickness: 1px;
 	text-underline-offset: 3px;
 }
 
-li::marker { color: #2f74d0; }
+li::marker { color: #1f5fbf; }
 
 blockquote,
 .wp-block-quote {
 	margin-left: 0;
 	padding: 0.2em 0 0.2em 1.25em;
-	border-left: 3px solid #2f74d0;
-	color: #384354;
+	border-left: 3px solid #1f5fbf;
+	color: #4a5466;
 }
 
 code,
@@ -125,10 +127,10 @@ pre,
 }
 :not(pre) > code {
 	padding: 0.12em 0.4em;
-	border: 1px solid #dfe4eb;
+	border: 1px solid #e2e8f1;
 	border-radius: 5px;
-	background: #f4f6f9;
-	color: #0b3d7a;
+	background: #f6f8fc;
+	color: #0b3d82;
 	font-size: 0.86em;
 }
 pre,
@@ -148,29 +150,29 @@ pre,
 .wp-block-table td {
 	padding: 10px 14px;
 	border: 0;
-	border-bottom: 1px solid #dfe4eb;
+	border-bottom: 1px solid #e2e8f1;
 	text-align: left;
 }
-.wp-block-table thead { border-bottom: 1px solid #dfe4eb; background: #f4f6f9; }
+.wp-block-table thead { border-bottom: 1px solid #e2e8f1; background: #f6f8fc; }
 
 .wp-block-image img { border-radius: 10px; }
-figcaption { color: #4f5b6b; font-size: 0.875rem; }
+figcaption { color: #5a6476; font-size: 0.875rem; }
 
 .is-style-ehk-note,
 .is-style-ehk-warning {
 	padding: 16px 20px;
-	border-left: 4px solid #2f74d0;
+	border-left: 4px solid #1f5fbf;
 	border-radius: 0 10px 10px 0;
 	background: #f1f6fd;
 }
 .is-style-ehk-warning {
 	border-left-color: #d08a1b;
-	background: #fff6e5;
+	background: #fff4e0;
 }
 .is-style-ehk-card {
 	padding: 24px;
-	border: 1px solid #dfe4eb;
-	border-radius: 14px;
+	border: 1px solid #e2e8f1;
+	border-radius: 10px;
 	background: #fff;
 }
-.is-style-ehk-spec td:first-child { width: 40%; font-weight: 600; color: #0a1f3d; }
+.is-style-ehk-spec td:first-child { width: 40%; font-weight: 600; color: #0b2a59; }

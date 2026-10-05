@@ -114,13 +114,13 @@ function ktuehk_needs_math() {
 }
 
 /**
- * Preload the two main font files (Latin + Turkish characters) so text
- * renders in the final font without a visible swap.
+ * Preload the main font file and the tiny Turkish subset (Ğ ğ İ Ş ş) so
+ * text renders in the final font without a visible swap.
  */
 function ktuehk_preload_fonts() {
 	$fonts = array(
-		'assets/fonts/ibm-plex-sans-latin-wght-normal.woff2',
-		'assets/fonts/ibm-plex-sans-latin-ext-wght-normal.woff2',
+		'assets/fonts/inter-latin-wght-normal.woff2',
+		'assets/fonts/inter-tr-wght-normal.woff2',
 	);
 	foreach ( $fonts as $font ) {
 		printf( '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url( KTUEHK_URI . '/' . $font ) );
@@ -141,7 +141,7 @@ add_action( 'wp_head', 'ktuehk_js_class', 0 );
  * Theme color for mobile browser UI.
  */
 function ktuehk_theme_color() {
-	$color = 'light' === get_theme_mod( 'ktuehk_header_style', 'blue' ) ? '#ffffff' : '#0a3a78';
+	$color = 'blue' === ktuehk_header_style() ? '#0a3069' : '#ffffff';
 	echo '<meta name="theme-color" content="' . esc_attr( $color ) . '">' . "\n";
 }
 add_action( 'wp_head', 'ktuehk_theme_color', 1 );

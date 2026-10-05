@@ -43,27 +43,27 @@ function ktuehk_setup() {
 			array(
 				'name'  => __( 'KTÜ mavisi', 'ktuehk' ),
 				'slug'  => 'ktu-blue',
-				'color' => '#0b4a96',
+				'color' => '#0b3d82',
 			),
 			array(
 				'name'  => __( 'Lacivert', 'ktuehk' ),
 				'slug'  => 'navy',
-				'color' => '#0a1f3d',
+				'color' => '#0b2a59',
 			),
 			array(
 				'name'  => __( 'Açık mavi', 'ktuehk' ),
 				'slug'  => 'blue-tint',
-				'color' => '#e8f0fb',
+				'color' => '#e4edfb',
 			),
 			array(
 				'name'  => __( 'Açık gri', 'ktuehk' ),
 				'slug'  => 'gray-50',
-				'color' => '#f4f6f9',
+				'color' => '#f6f8fc',
 			),
 			array(
 				'name'  => __( 'Gri', 'ktuehk' ),
 				'slug'  => 'gray-600',
-				'color' => '#4f5b6b',
+				'color' => '#5a6476',
 			),
 			array(
 				'name'  => __( 'Beyaz', 'ktuehk' ),
@@ -250,7 +250,7 @@ function ktuehk_search_types() {
  * @return string[]
  */
 function ktuehk_body_classes( $classes ) {
-	$classes[] = 'header-' . ( 'light' === get_theme_mod( 'ktuehk_header_style', 'blue' ) ? 'light' : 'blue' );
+	$classes[] = 'header-' . ktuehk_header_style();
 	if ( is_singular() && has_post_thumbnail() ) {
 		$classes[] = 'has-cover';
 	}

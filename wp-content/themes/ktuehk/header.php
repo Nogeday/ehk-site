@@ -1,6 +1,6 @@
 <?php
 /**
- * Site header.
+ * Site header: logo, centred main menu, search and mobile menu toggle.
  *
  * @package KTUEHK
  */
@@ -33,21 +33,26 @@ defined( 'ABSPATH' ) || exit;
 				)
 			);
 			?>
-			<form class="nav__search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<form class="nav__search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Menüden ara', 'ktuehk' ); ?>">
 				<label class="screen-reader-text" for="nav-search-input"><?php esc_html_e( 'Sitede ara', 'ktuehk' ); ?></label>
 				<?php echo ktuehk_icon( 'search', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-				<input id="nav-search-input" class="nav__search-input" type="search" name="s" placeholder="<?php esc_attr_e( 'Yazı, proje veya etkinlik ara…', 'ktuehk' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
+				<input id="nav-search-input" class="nav__search-input" type="search" name="s" placeholder="<?php esc_attr_e( 'Arama yap…', 'ktuehk' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
 			</form>
 		</nav>
 
 		<div class="site-header__actions">
+			<form class="header-search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Sitede ara', 'ktuehk' ); ?>">
+				<label class="screen-reader-text" for="header-search-input"><?php esc_html_e( 'Sitede ara', 'ktuehk' ); ?></label>
+				<?php echo ktuehk_icon( 'search', 17 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				<input id="header-search-input" class="header-search__input" type="search" name="s" placeholder="<?php esc_attr_e( 'Arama yap…', 'ktuehk' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
+			</form>
 			<button type="button" class="icon-btn search-toggle" aria-expanded="false" aria-controls="site-search" data-search-toggle>
 				<?php echo ktuehk_icon( 'search', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				<span class="screen-reader-text"><?php esc_html_e( 'Sitede ara', 'ktuehk' ); ?></span>
 			</button>
 			<button type="button" class="icon-btn nav-toggle" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
-				<span class="nav-toggle__open"><?php echo ktuehk_icon( 'menu', 22 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-				<span class="nav-toggle__close"><?php echo ktuehk_icon( 'x', 22 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+				<span class="nav-toggle__open"><?php echo ktuehk_icon( 'menu', 24 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+				<span class="nav-toggle__close"><?php echo ktuehk_icon( 'x', 24 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 				<span class="screen-reader-text" data-nav-toggle-label><?php esc_html_e( 'Menüyü aç', 'ktuehk' ); ?></span>
 			</button>
 		</div>

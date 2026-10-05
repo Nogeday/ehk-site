@@ -23,13 +23,12 @@ while ( have_posts() ) :
 		$ktuehk_prepared = ktuehk_prepare_content( false );
 		$ktuehk_html     = $ktuehk_prepared['html'];
 	}
-	$ktuehk_projects = ktuehk_type_available( 'project' ) ? get_post_type_archive_link( ktuehk_project_type() ) : '';
 
 	get_template_part(
 		'template-parts/page-header',
 		null,
 		array(
-			'eyebrow' => __( 'Hakkımızda', 'ktuehk' ),
+			'eyebrow' => __( 'HAKKIMIZDA', 'ktuehk' ),
 			'title'   => get_the_title(),
 			'desc'    => has_excerpt() ? wp_strip_all_tags( get_the_excerpt() ) : ktuehk_mod( 'hero_text' ),
 			'class'   => 'page-hero--about',
@@ -44,21 +43,8 @@ while ( have_posts() ) :
 		</div>
 	</div>
 
-	<section class="section section--alt cta-band" aria-labelledby="about-cta">
-		<div class="container cta-band__inner">
-			<div>
-				<p class="eyebrow"><?php esc_html_e( 'Keşfetmeye başlayın', 'ktuehk' ); ?></p>
-				<h2 class="section-title" id="about-cta"><?php esc_html_e( 'Ürettiklerimize yakından bakın', 'ktuehk' ); ?></h2>
-			</div>
-			<div class="cta-band__actions">
-				<?php if ( $ktuehk_projects ) : ?>
-					<a class="btn btn--primary" href="<?php echo esc_url( $ktuehk_projects ); ?>"><?php esc_html_e( 'Projelerimizi Keşfet', 'ktuehk' ); ?><?php echo ktuehk_icon( 'arrow-right', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
-				<?php endif; ?>
-				<a class="btn btn--outline" href="<?php echo esc_url( ktuehk_posts_url() ); ?>"><?php esc_html_e( 'Teknik Yazıları Oku', 'ktuehk' ); ?></a>
-			</div>
-		</div>
-	</section>
 	<?php
+	get_template_part( 'template-parts/cta-band', null, array( 'context' => 'about' ) );
 endwhile;
 
 get_footer();

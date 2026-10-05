@@ -15,14 +15,15 @@ defined( 'ABSPATH' ) || exit;
  */
 function ktuehk_mod_defaults() {
 	return array(
-		'header_style'   => 'blue',
-		'hero_eyebrow'   => __( 'Karadeniz Teknik Üniversitesi · Teknoloji Fakültesi', 'ktuehk' ),
-		'hero_title'     => __( 'KTÜ Elektronik ve Haberleşme Kulübü', 'ktuehk' ),
-		'hero_text'      => __( 'Elektronik, haberleşme ve teknoloji alanlarında üreten, araştıran ve geliştiren KTÜ öğrencilerinin topluluğu.', 'ktuehk' ),
-		'about_title'    => __( 'Mühendisliği sınıfın dışına taşıyan bir topluluk', 'ktuehk' ),
-		'about_text'     => __( 'KTÜ Elektronik ve Haberleşme Kulübü; elektronik ve haberleşme mühendisliği öğrencilerinin proje geliştirdiği, birlikte öğrendiği ve ürettiklerini paylaştığı bir öğrenci topluluğudur. Devre tasarımından RF sistemlerine, gömülü yazılımdan ağ teknolojilerine kadar geniş bir alanda uygulamalı çalışmalar yürütüyoruz.', 'ktuehk' ),
-		'intro_posts'    => __( 'Kulüp üyelerinin elektronik, haberleşme, gömülü sistemler, ağ teknolojileri ve daha birçok alanda hazırladığı teknik ve bilimsel yazılar.', 'ktuehk' ),
-		'intro_projects' => __( 'TÜBİTAK 2209, TEKNOFEST ve kulüp içi çalışmalarla geliştirilen öğrenci projeleri: problem, yaklaşım, ekip ve sonuçlarıyla.', 'ktuehk' ),
+		'header_style'   => 'light',
+		'hero_eyebrow'   => __( 'KARADENİZ TEKNİK ÜNİVERSİTESİ', 'ktuehk' ),
+		'hero_title'     => __( "Elektronik ve Haberleşme\nAlanında Üretiyoruz", 'ktuehk' ),
+		'hero_text'      => __( 'KTÜ Elektronik ve Haberleşme Kulübü olarak öğrencilerimizin araştırma yapmasını, projeler geliştirmesini, teknik ve bilimsel çalışmalar üretmesini ve etkinlikler düzenlemesini destekliyoruz.', 'ktuehk' ),
+		'cta_eyebrow'    => __( 'KTÜ EHK', 'ktuehk' ),
+		'cta_title'      => __( 'KTÜ EHK ile Üretmeye Başla', 'ktuehk' ),
+		'cta_text'       => __( 'Projelerde yer al, etkinliklere katıl, teknik becerilerini geliştir ve elektronik ve haberleşme alanında birlikte üretelim.', 'ktuehk' ),
+		'intro_posts'    => __( 'Elektronik, haberleşme, gömülü sistemler ve ağ teknolojileri üzerine kulüp üyelerinin hazırladığı teknik ve bilimsel yazılar.', 'ktuehk' ),
+		'intro_projects' => __( 'Öğrencilerimiz tarafından geliştirilen teknik çalışmalar.', 'ktuehk' ),
 		'intro_events'   => __( 'Workshop, seminer, teknik eğitim ve gezilerimiz. Yaklaşan etkinliklere katılın, geçmiş etkinliklerden notlara ve fotoğraflara göz atın.', 'ktuehk' ),
 	);
 }
@@ -37,6 +38,15 @@ function ktuehk_mod( $key ) {
 	$defaults = ktuehk_mod_defaults();
 	$value    = get_theme_mod( 'ktuehk_' . $key, isset( $defaults[ $key ] ) ? $defaults[ $key ] : '' );
 	return is_string( $value ) && '' !== trim( $value ) ? $value : ( isset( $defaults[ $key ] ) ? $defaults[ $key ] : '' );
+}
+
+/**
+ * Header colour scheme: "light" (default, white bar) or "blue".
+ *
+ * @return string
+ */
+function ktuehk_header_style() {
+	return 'blue' === get_theme_mod( 'ktuehk_header_style', 'light' ) ? 'blue' : 'light';
 }
 
 /**
@@ -104,9 +114,9 @@ function ktuehk_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'ktuehk_header_style',
 		array(
-			'default'           => 'blue',
+			'default'           => 'light',
 			'sanitize_callback' => static function ( $value ) {
-				return 'light' === $value ? 'light' : 'blue';
+				return 'blue' === $value ? 'blue' : 'light';
 			},
 		)
 	);
@@ -114,16 +124,15 @@ function ktuehk_customize_register( $wp_customize ) {
 		'ktuehk_header_style',
 		array(
 			'label'       => __( 'Menü çubuğu rengi', 'ktuehk' ),
-			'description' => __( 'Logonuz koyu zeminde iyi görünmüyorsa "Beyaz" seçin.', 'ktuehk' ),
+			'description' => __( 'Varsayılan: Beyaz. Mavi seçilirse logo koyu zeminde gösterilir.', 'ktuehk' ),
 			'section'     => 'ktuehk_header',
 			'type'        => 'radio',
 			'choices'     => array(
-				'blue'  => __( 'KTÜ mavisi', 'ktuehk' ),
 				'light' => __( 'Beyaz', 'ktuehk' ),
+				'blue'  => __( 'KTÜ mavisi', 'ktuehk' ),
 			),
 		)
 	);
-
 	$wp_customize->add_setting(
 		'ktuehk_logo_dark',
 		array(
@@ -155,11 +164,12 @@ function ktuehk_customize_register( $wp_customize ) {
 	);
 	$texts = array(
 		'hero_eyebrow'   => array( __( 'Ana sayfa — üst etiket', 'ktuehk' ), 'text' ),
-		'hero_title'     => array( __( 'Ana sayfa — başlık', 'ktuehk' ), 'text' ),
+		'hero_title'     => array( __( 'Ana sayfa — başlık (satır atlamak için Enter)', 'ktuehk' ), 'textarea' ),
 		'hero_text'      => array( __( 'Ana sayfa — açıklama (meta açıklama olarak da kullanılır)', 'ktuehk' ), 'textarea' ),
-		'about_title'    => array( __( '"Biz kimiz?" başlığı', 'ktuehk' ), 'text' ),
-		'about_text'     => array( __( '"Biz kimiz?" metni', 'ktuehk' ), 'textarea' ),
-		'intro_posts'    => array( __( 'Yazılar sayfası açıklaması', 'ktuehk' ), 'textarea' ),
+		'cta_eyebrow'    => array( __( 'Çağrı bandı — üst etiket', 'ktuehk' ), 'text' ),
+		'cta_title'      => array( __( 'Çağrı bandı — başlık', 'ktuehk' ), 'text' ),
+		'cta_text'       => array( __( 'Çağrı bandı — metin', 'ktuehk' ), 'textarea' ),
+		'intro_posts'    => array( __( 'Teknik Yazılar sayfası açıklaması', 'ktuehk' ), 'textarea' ),
 		'intro_projects' => array( __( 'Projeler sayfası açıklaması', 'ktuehk' ), 'textarea' ),
 		'intro_events'   => array( __( 'Etkinlikler sayfası açıklaması', 'ktuehk' ), 'textarea' ),
 	);

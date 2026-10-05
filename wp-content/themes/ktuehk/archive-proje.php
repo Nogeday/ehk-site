@@ -23,14 +23,14 @@ $ktuehk_current = array(
 );
 $ktuehk_filtered = $ktuehk_current['program'] || $ktuehk_current['alan'] || $ktuehk_current['yil'] || $ktuehk_current['durum'];
 
-$ktuehk_title = $ktuehk_term ? $ktuehk_term->name : __( 'Projeler', 'ktuehk' );
+$ktuehk_title = $ktuehk_term ? $ktuehk_term->name : __( 'Projelerimiz', 'ktuehk' );
 $ktuehk_desc  = $ktuehk_term && $ktuehk_term->description ? wp_strip_all_tags( $ktuehk_term->description ) : ktuehk_mod( 'intro_projects' );
 
 get_template_part(
 	'template-parts/page-header',
 	null,
 	array(
-		'eyebrow' => $ktuehk_term ? ( 'ehk_program' === $ktuehk_term->taxonomy ? __( 'Yarışma / Program', 'ktuehk' ) : __( 'Proje alanı', 'ktuehk' ) ) : __( 'Öğrenci projeleri', 'ktuehk' ),
+		'eyebrow' => $ktuehk_term ? ( 'ehk_program' === $ktuehk_term->taxonomy ? __( 'YARIŞMA / PROGRAM', 'ktuehk' ) : __( 'PROJE KATEGORİSİ', 'ktuehk' ) ) : __( 'PROJELER', 'ktuehk' ),
 		'title'   => $ktuehk_title,
 		'desc'    => $ktuehk_desc,
 	)
@@ -67,9 +67,9 @@ $ktuehk_statuses = function_exists( 'ktuehk_project_statuses' ) ? ktuehk_project
 		<form class="filters" method="get" action="<?php echo esc_url( $ktuehk_archive ); ?>" data-clean-submit aria-label="<?php esc_attr_e( 'Projeleri filtrele', 'ktuehk' ); ?>">
 			<span class="filters__title"><?php echo ktuehk_icon( 'sliders-horizontal', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Filtrele', 'ktuehk' ); ?></span>
 			<?php
-			$ktuehk_select( 'program', __( 'Yarışma / Program', 'ktuehk' ), $ktuehk_term_options( 'ehk_program' ), $ktuehk_current['program'] );
-			$ktuehk_select( 'alan', __( 'Alan', 'ktuehk' ), $ktuehk_term_options( 'ehk_alan' ), $ktuehk_current['alan'] );
 			$ktuehk_select( 'yil', __( 'Yıl', 'ktuehk' ), array_combine( $ktuehk_years, $ktuehk_years ) ?: array(), $ktuehk_current['yil'] ? $ktuehk_current['yil'] : '' );
+			$ktuehk_select( 'alan', __( 'Kategori', 'ktuehk' ), $ktuehk_term_options( 'ehk_alan' ), $ktuehk_current['alan'] );
+			$ktuehk_select( 'program', __( 'Yarışma / Program', 'ktuehk' ), $ktuehk_term_options( 'ehk_program' ), $ktuehk_current['program'] );
 			$ktuehk_select( 'durum', __( 'Durum', 'ktuehk' ), $ktuehk_statuses, $ktuehk_current['durum'] );
 			?>
 			<div class="filters__actions">
@@ -113,7 +113,7 @@ $ktuehk_statuses = function_exists( 'ktuehk_project_statuses' ) ? ktuehk_project
 				array(
 					'icon'       => 'cpu',
 					'title'      => $ktuehk_filtered ? __( 'Bu filtrelere uygun proje bulunamadı', 'ktuehk' ) : __( 'Henüz proje eklenmedi', 'ktuehk' ),
-					'text'       => $ktuehk_filtered ? __( 'Farklı bir yıl, program veya alan seçmeyi deneyin.', 'ktuehk' ) : '',
+					'text'       => $ktuehk_filtered ? __( 'Farklı bir yıl, kategori veya program seçmeyi deneyin.', 'ktuehk' ) : '',
 					'link'       => $ktuehk_filtered ? $ktuehk_archive : '',
 					'link_text'  => __( 'Filtreleri temizle', 'ktuehk' ),
 					'admin_link' => admin_url( 'post-new.php?post_type=' . $ktuehk_type ),

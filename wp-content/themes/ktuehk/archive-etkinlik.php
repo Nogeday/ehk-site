@@ -21,7 +21,7 @@ get_template_part(
 	'template-parts/page-header',
 	null,
 	array(
-		'eyebrow' => $ktuehk_term ? __( 'Etkinlik türü', 'ktuehk' ) : __( 'Takvim', 'ktuehk' ),
+		'eyebrow' => $ktuehk_term ? __( 'ETKİNLİK TÜRÜ', 'ktuehk' ) : __( 'ETKİNLİKLER', 'ktuehk' ),
 		'title'   => $ktuehk_term ? $ktuehk_term->name : __( 'Etkinlikler', 'ktuehk' ),
 		'desc'    => $ktuehk_term && $ktuehk_term->description ? wp_strip_all_tags( $ktuehk_term->description ) : ktuehk_mod( 'intro_events' ),
 	)
@@ -73,7 +73,7 @@ $ktuehk_types = get_terms(
 			<section class="events-block events-block--upcoming" aria-labelledby="upcoming-title">
 				<h2 class="events-block__title" id="upcoming-title">
 					<?php echo ktuehk_icon( 'calendar-clock', 22 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-					<?php esc_html_e( 'Yaklaşan etkinlikler', 'ktuehk' ); ?>
+					<?php esc_html_e( 'Yaklaşan Etkinlikler', 'ktuehk' ); ?>
 				</h2>
 				<?php if ( $ktuehk_upcoming->have_posts() ) : ?>
 					<div class="event-rows">
@@ -94,7 +94,7 @@ $ktuehk_types = get_terms(
 		<section class="events-block events-block--past" aria-labelledby="past-title">
 			<h2 class="events-block__title" id="past-title">
 				<?php echo ktuehk_icon( 'yaklasan' === $ktuehk_period ? 'calendar-clock' : 'history', 22 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-				<?php 'yaklasan' === $ktuehk_period ? esc_html_e( 'Yaklaşan etkinlikler', 'ktuehk' ) : esc_html_e( 'Geçmiş etkinlikler', 'ktuehk' ); ?>
+				<?php 'yaklasan' === $ktuehk_period ? esc_html_e( 'Yaklaşan Etkinlikler', 'ktuehk' ) : esc_html_e( 'Geçmiş Etkinlikler', 'ktuehk' ); ?>
 			</h2>
 			<?php if ( have_posts() ) : ?>
 				<div class="grid grid--3">

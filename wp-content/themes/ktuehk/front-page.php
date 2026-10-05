@@ -2,9 +2,10 @@
 /**
  * Home page.
  *
- * Sections: hero, about, featured projects, latest articles, events,
- * focus areas, what we offer. Sections without content are hidden for
- * visitors (editors see a hint with an "add" link instead).
+ * Sections: hero, featured projects, latest technical articles, events,
+ * focus areas and a call-to-action band. Every list is filled from
+ * WordPress content and updates automatically. Sections without content
+ * are hidden for visitors (editors see a hint with an "add" link instead).
  *
  * @package KTUEHK
  */
@@ -17,105 +18,41 @@ $ktuehk_project_type = ktuehk_project_type();
 $ktuehk_event_type   = ktuehk_event_type();
 $ktuehk_has_projects = post_type_exists( $ktuehk_project_type );
 $ktuehk_has_events   = post_type_exists( $ktuehk_event_type );
-$ktuehk_projects_url = $ktuehk_has_projects ? get_post_type_archive_link( $ktuehk_project_type ) : '';
-$ktuehk_events_url   = $ktuehk_has_events ? get_post_type_archive_link( $ktuehk_event_type ) : '';
+$ktuehk_projects_url = $ktuehk_has_projects ? (string) get_post_type_archive_link( $ktuehk_project_type ) : '';
+$ktuehk_events_url   = $ktuehk_has_events ? (string) get_post_type_archive_link( $ktuehk_event_type ) : '';
 $ktuehk_posts_url    = ktuehk_posts_url();
 $ktuehk_about        = ktuehk_about_page();
 $ktuehk_can_edit     = current_user_can( 'edit_posts' );
-
-$ktuehk_stats = array_filter(
-	array(
-		array(
-			'value' => $ktuehk_has_projects ? ktuehk_count( $ktuehk_project_type ) : 0,
-			'label' => __( 'Proje', 'ktuehk' ),
-		),
-		array(
-			'value' => ktuehk_count( 'post' ),
-			'label' => __( 'Teknik yazı', 'ktuehk' ),
-		),
-		array(
-			'value' => $ktuehk_has_events ? ktuehk_count( $ktuehk_event_type ) : 0,
-			'label' => __( 'Etkinlik', 'ktuehk' ),
-		),
-		array(
-			'value' => count( ktuehk_focus_areas() ),
-			'label' => __( 'Çalışma alanı', 'ktuehk' ),
-		),
-	),
-	static function ( $stat ) {
-		return $stat['value'] > 0;
-	}
-);
+$ktuehk_title_lines  = preg_split( '/\r\n|\r|\n/', trim( ktuehk_mod( 'hero_title' ) ) );
 ?>
 
 <section class="hero" aria-labelledby="hero-title">
-	<?php get_template_part( 'template-parts/hero-visual', null, array( 'part' => 'traces' ) ); ?>
 	<div class="container hero__grid">
 		<div class="hero__content">
 			<p class="eyebrow"><?php echo esc_html( ktuehk_mod( 'hero_eyebrow' ) ); ?></p>
-			<h1 class="hero__title" id="hero-title"><?php echo esc_html( ktuehk_mod( 'hero_title' ) ); ?></h1>
+			<h1 class="hero__title" id="hero-title"><?php echo implode( '<br>', array_map( 'esc_html', $ktuehk_title_lines ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- each line escaped. ?></h1>
 			<p class="hero__lead"><?php echo esc_html( ktuehk_mod( 'hero_text' ) ); ?></p>
 			<div class="hero__actions">
 				<?php if ( $ktuehk_projects_url ) : ?>
 					<a class="btn btn--primary btn--lg" href="<?php echo esc_url( $ktuehk_projects_url ); ?>">
-						<?php esc_html_e( 'Projelerimizi Keşfet', 'ktuehk' ); ?>
+						<?php esc_html_e( 'Projeleri Keşfet', 'ktuehk' ); ?>
 						<?php echo ktuehk_icon( 'arrow-right', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					</a>
 				<?php endif; ?>
 				<a class="btn btn--outline btn--lg" href="<?php echo esc_url( $ktuehk_posts_url ); ?>">
 					<?php esc_html_e( 'Teknik Yazıları Oku', 'ktuehk' ); ?>
+					<?php echo ktuehk_icon( 'arrow-right', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				</a>
 			</div>
 		</div>
-
-		<div class="hero__panel">
-			<div class="hero__scope">
-				<div class="hero__scope-head" aria-hidden="true">
-					<span>CH1 · AM</span>
-					<span class="hero__scope-dot"></span>
-				</div>
-				<?php get_template_part( 'template-parts/hero-visual', null, array( 'part' => 'scope' ) ); ?>
-			</div>
-			<?php if ( $ktuehk_stats ) : ?>
-				<dl class="stats">
-					<?php foreach ( $ktuehk_stats as $ktuehk_stat ) : ?>
-						<div class="stat">
-							<dt class="stat__label"><?php echo esc_html( $ktuehk_stat['label'] ); ?></dt>
-							<dd class="stat__value"><?php echo esc_html( number_format_i18n( $ktuehk_stat['value'] ) ); ?></dd>
-						</div>
-					<?php endforeach; ?>
-				</dl>
-			<?php endif; ?>
+		<div class="hero__visual">
+			<?php get_template_part( 'template-parts/hero-visual', null, array( 'part' => 'illustration' ) ); ?>
 		</div>
-	</div>
-</section>
-
-<section class="section about-home" aria-labelledby="about-title">
-	<div class="container about-home__grid">
-		<div class="about-home__intro">
-			<p class="eyebrow"><?php esc_html_e( 'Biz kimiz?', 'ktuehk' ); ?></p>
-			<h2 class="section-title" id="about-title"><?php echo esc_html( ktuehk_mod( 'about_title' ) ); ?></h2>
-			<p class="about-home__text"><?php echo esc_html( ktuehk_mod( 'about_text' ) ); ?></p>
-			<?php if ( $ktuehk_about ) : ?>
-				<a class="link-arrow" href="<?php echo esc_url( get_permalink( $ktuehk_about ) ); ?>"><?php esc_html_e( 'Kulübü yakından tanıyın', 'ktuehk' ); ?><?php echo ktuehk_icon( 'arrow-right', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
-			<?php endif; ?>
-		</div>
-		<ul class="pillars">
-			<?php foreach ( ktuehk_pillars() as $ktuehk_pillar ) : ?>
-				<li class="pillar">
-					<span class="pillar__icon"><?php echo ktuehk_icon( $ktuehk_pillar['icon'], 22 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-					<div>
-						<h3 class="pillar__title"><?php echo esc_html( $ktuehk_pillar['title'] ); ?></h3>
-						<p class="pillar__text"><?php echo esc_html( $ktuehk_pillar['text'] ); ?></p>
-					</div>
-				</li>
-			<?php endforeach; ?>
-		</ul>
 	</div>
 </section>
 
 <?php
-// Featured projects: marked "öne çıkan" first, then the latest ones.
+// Featured projects: those marked "öne çıkan" first, then the latest ones.
 if ( $ktuehk_has_projects ) :
 	$ktuehk_projects = get_posts(
 		array(
@@ -146,12 +83,11 @@ if ( $ktuehk_has_projects ) :
 				<?php
 				ktuehk_section_head(
 					array(
-						'eyebrow'   => __( 'Öne çıkan projeler', 'ktuehk' ),
-						'title'     => __( 'Öğrencilerin geliştirdiği projeler', 'ktuehk' ),
-						'desc'      => __( 'TÜBİTAK, TEKNOFEST ve kulüp içi çalışmalardan seçilmiş projeler.', 'ktuehk' ),
+						'eyebrow'   => __( 'PROJELER', 'ktuehk' ),
+						'title'     => __( 'Öne Çıkan Projeler', 'ktuehk' ),
 						'id'        => 'projects-title',
 						'link'      => $ktuehk_projects ? $ktuehk_projects_url : '',
-						'link_text' => __( 'Tüm projeler', 'ktuehk' ),
+						'link_text' => __( 'Tüm Projeleri Gör', 'ktuehk' ),
 					)
 				);
 				if ( $ktuehk_projects ) :
@@ -190,7 +126,7 @@ endif;
 $ktuehk_posts = get_posts(
 	array(
 		'post_type'           => 'post',
-		'posts_per_page'      => 3,
+		'posts_per_page'      => 4,
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
 	)
@@ -202,22 +138,21 @@ if ( $ktuehk_posts || $ktuehk_can_edit ) :
 			<?php
 			ktuehk_section_head(
 				array(
-					'eyebrow'   => __( 'Teknik yazılar', 'ktuehk' ),
-					'title'     => __( 'Son yazılar', 'ktuehk' ),
-					'desc'      => __( 'Üyelerimizin elektronik, haberleşme ve yazılım alanlarında hazırladığı teknik içerikler.', 'ktuehk' ),
+					'eyebrow'   => __( 'TEKNİK YAZILAR', 'ktuehk' ),
+					'title'     => __( 'Son Teknik Yazılar', 'ktuehk' ),
 					'id'        => 'posts-title',
 					'link'      => $ktuehk_posts ? $ktuehk_posts_url : '',
-					'link_text' => __( 'Tüm yazılar', 'ktuehk' ),
+					'link_text' => __( 'Tüm Yazıları Gör', 'ktuehk' ),
 				)
 			);
 			if ( $ktuehk_posts ) :
 				?>
-				<div class="grid grid--3">
+				<div class="grid grid--4">
 					<?php
 					global $post;
 					foreach ( $ktuehk_posts as $post ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride
 						setup_postdata( $post );
-						get_template_part( 'template-parts/card', 'post' );
+						get_template_part( 'template-parts/card', 'post', array( 'sizes' => '(min-width: 1200px) 290px, (min-width: 640px) 50vw, 100vw' ) );
 					endforeach;
 					wp_reset_postdata();
 					?>
@@ -242,20 +177,29 @@ if ( $ktuehk_posts || $ktuehk_can_edit ) :
 	<?php
 endif;
 
+// Events: upcoming first (soonest first), filled up with the most recent past ones.
 if ( $ktuehk_has_events && function_exists( 'ktuehk_upcoming_events_args' ) ) :
-	$ktuehk_events = get_posts( ktuehk_upcoming_events_args( array( 'posts_per_page' => 3, 'no_found_rows' => true ) ) );
-	if ( count( $ktuehk_events ) < 3 ) {
+	$ktuehk_upcoming = get_posts( ktuehk_upcoming_events_args( array( 'posts_per_page' => 4, 'no_found_rows' => true ) ) );
+	$ktuehk_events   = $ktuehk_upcoming;
+	if ( count( $ktuehk_events ) < 4 ) {
 		$ktuehk_events = array_merge(
 			$ktuehk_events,
 			get_posts(
 				ktuehk_past_events_args(
 					array(
-						'posts_per_page' => 3 - count( $ktuehk_events ),
+						'posts_per_page' => 4 - count( $ktuehk_events ),
 						'no_found_rows'  => true,
 					)
 				)
 			)
 		);
+	}
+	if ( count( $ktuehk_upcoming ) === count( $ktuehk_events ) ) {
+		$ktuehk_events_title = __( 'Yaklaşan Etkinlikler', 'ktuehk' );
+	} elseif ( $ktuehk_upcoming ) {
+		$ktuehk_events_title = __( 'Yaklaşan ve Son Etkinlikler', 'ktuehk' );
+	} else {
+		$ktuehk_events_title = __( 'Son Etkinlikler', 'ktuehk' );
 	}
 	if ( $ktuehk_events || $ktuehk_can_edit ) :
 		?>
@@ -264,22 +208,21 @@ if ( $ktuehk_has_events && function_exists( 'ktuehk_upcoming_events_args' ) ) :
 				<?php
 				ktuehk_section_head(
 					array(
-						'eyebrow'   => __( 'Etkinlikler', 'ktuehk' ),
-						'title'     => __( 'Yaklaşan ve son etkinlikler', 'ktuehk' ),
-						'desc'      => __( 'Workshop, seminer, teknik eğitim ve gezilerimiz.', 'ktuehk' ),
+						'eyebrow'   => __( 'ETKİNLİKLER', 'ktuehk' ),
+						'title'     => $ktuehk_events ? $ktuehk_events_title : __( 'Etkinlikler', 'ktuehk' ),
 						'id'        => 'events-title',
 						'link'      => $ktuehk_events ? $ktuehk_events_url : '',
-						'link_text' => __( 'Tüm etkinlikler', 'ktuehk' ),
+						'link_text' => __( 'Tüm Etkinlikleri Gör', 'ktuehk' ),
 					)
 				);
 				if ( $ktuehk_events ) :
 					?>
-					<div class="grid grid--3">
+					<div class="grid grid--4">
 						<?php
 						global $post;
 						foreach ( $ktuehk_events as $post ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride
 							setup_postdata( $post );
-							get_template_part( 'template-parts/card', 'event' );
+							get_template_part( 'template-parts/card', 'event-compact' );
 						endforeach;
 						wp_reset_postdata();
 						?>
@@ -311,9 +254,8 @@ endif;
 		<?php
 		ktuehk_section_head(
 			array(
-				'eyebrow' => __( 'Çalışma alanlarımız', 'ktuehk' ),
-				'title'   => __( 'Elektronikten ağ teknolojilerine', 'ktuehk' ),
-				'desc'    => __( 'Projelerimiz ve yazılarımız elektronik ve haberleşme mühendisliğinin bu alanlarında yoğunlaşıyor.', 'ktuehk' ),
+				'eyebrow' => __( 'ALANLARIMIZ', 'ktuehk' ),
+				'title'   => __( 'Çalışma Alanlarımız', 'ktuehk' ),
 				'id'      => 'areas-title',
 			)
 		);
@@ -322,20 +264,7 @@ endif;
 	</div>
 </section>
 
-<section class="section section--alt" aria-labelledby="offers-title">
-	<div class="container">
-		<?php
-		ktuehk_section_head(
-			array(
-				'eyebrow' => __( 'Neden EHK?', 'ktuehk' ),
-				'title'   => __( 'Kulübün öğrencilere sundukları', 'ktuehk' ),
-				'id'      => 'offers-title',
-			)
-		);
-		get_template_part( 'template-parts/section', 'offerings' );
-		?>
-	</div>
-</section>
+<?php get_template_part( 'template-parts/cta-band' ); ?>
 
 <?php
 get_footer();

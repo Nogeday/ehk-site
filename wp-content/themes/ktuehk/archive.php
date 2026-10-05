@@ -9,18 +9,18 @@ defined( 'ABSPATH' ) || exit;
 
 get_header();
 
-$ktuehk_eyebrow = __( 'Arşiv', 'ktuehk' );
+$ktuehk_eyebrow = __( 'ARŞİV', 'ktuehk' );
 $ktuehk_desc    = wp_strip_all_tags( (string) get_the_archive_description() );
 
 if ( is_category() ) {
-	$ktuehk_eyebrow = __( 'Kategori', 'ktuehk' );
+	$ktuehk_eyebrow = __( 'KATEGORİ', 'ktuehk' );
 } elseif ( is_tag() ) {
-	$ktuehk_eyebrow = __( 'Etiket', 'ktuehk' );
+	$ktuehk_eyebrow = __( 'ETİKET', 'ktuehk' );
 } elseif ( is_author() ) {
-	$ktuehk_eyebrow = __( 'Yazar', 'ktuehk' );
+	$ktuehk_eyebrow = __( 'YAZAR', 'ktuehk' );
 	$ktuehk_desc    = get_the_author_meta( 'description', get_queried_object_id() );
 } elseif ( is_date() ) {
-	$ktuehk_eyebrow = __( 'Tarih arşivi', 'ktuehk' );
+	$ktuehk_eyebrow = __( 'TARİH ARŞİVİ', 'ktuehk' );
 }
 
 if ( '' === trim( (string) $ktuehk_desc ) && ! is_author() ) {

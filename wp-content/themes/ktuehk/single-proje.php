@@ -78,16 +78,18 @@ while ( have_posts() ) :
 		<header class="page-hero page-hero--project">
 			<div class="container page-hero__inner">
 				<?php ktuehk_breadcrumbs(); ?>
-				<p class="card__eyebrow">
-					<?php if ( $ktuehk_programs && ! is_wp_error( $ktuehk_programs ) ) : ?>
-						<?php foreach ( $ktuehk_programs as $ktuehk_program ) : ?>
-							<a class="badge badge--blue" href="<?php echo esc_url( get_term_link( $ktuehk_program ) ); ?>"><?php echo esc_html( $ktuehk_program->name ); ?></a>
-						<?php endforeach; ?>
-					<?php endif; ?>
-					<?php if ( $ktuehk_status ) : ?>
-						<span class="status status--<?php echo esc_attr( $ktuehk_status['key'] ); ?>"><?php echo esc_html( $ktuehk_status['label'] ); ?></span>
-					<?php endif; ?>
-				</p>
+				<?php if ( ( $ktuehk_programs && ! is_wp_error( $ktuehk_programs ) ) || $ktuehk_status ) : ?>
+					<p class="card__badges">
+						<?php if ( $ktuehk_programs && ! is_wp_error( $ktuehk_programs ) ) : ?>
+							<?php foreach ( $ktuehk_programs as $ktuehk_program ) : ?>
+								<a class="badge badge--solid" href="<?php echo esc_url( get_term_link( $ktuehk_program ) ); ?>"><?php echo esc_html( $ktuehk_program->name ); ?></a>
+							<?php endforeach; ?>
+						<?php endif; ?>
+						<?php if ( $ktuehk_status ) : ?>
+							<span class="pill pill--<?php echo esc_attr( $ktuehk_status['key'] ); ?>"><?php echo esc_html( $ktuehk_status['label'] ); ?></span>
+						<?php endif; ?>
+					</p>
+				<?php endif; ?>
 				<h1 class="page-hero__title"><?php the_title(); ?></h1>
 				<?php if ( has_excerpt() ) : ?>
 					<p class="page-hero__desc"><?php echo esc_html( wp_strip_all_tags( get_the_excerpt() ) ); ?></p>
@@ -135,11 +137,11 @@ while ( have_posts() ) :
 							<div class="spec__row"><dt><?php esc_html_e( 'Yıl', 'ktuehk' ); ?></dt><dd><?php echo esc_html( $ktuehk_year ); ?></dd></div>
 						<?php endif; ?>
 						<?php if ( $ktuehk_status ) : ?>
-							<div class="spec__row"><dt><?php esc_html_e( 'Durum', 'ktuehk' ); ?></dt><dd><span class="status status--<?php echo esc_attr( $ktuehk_status['key'] ); ?>"><?php echo esc_html( $ktuehk_status['label'] ); ?></span></dd></div>
+							<div class="spec__row"><dt><?php esc_html_e( 'Durum', 'ktuehk' ); ?></dt><dd><span class="pill pill--<?php echo esc_attr( $ktuehk_status['key'] ); ?>"><?php echo esc_html( $ktuehk_status['label'] ); ?></span></dd></div>
 						<?php endif; ?>
 						<?php if ( $ktuehk_areas && ! is_wp_error( $ktuehk_areas ) ) : ?>
 							<div class="spec__row">
-								<dt><?php esc_html_e( 'Alan', 'ktuehk' ); ?></dt>
+								<dt><?php esc_html_e( 'Kategori', 'ktuehk' ); ?></dt>
 								<dd>
 									<?php
 									$ktuehk_area_links = array();
@@ -259,11 +261,11 @@ while ( have_posts() ) :
 				<?php
 				ktuehk_section_head(
 					array(
-						'eyebrow'   => __( 'Diğer projeler', 'ktuehk' ),
-						'title'     => __( 'Benzer projeler', 'ktuehk' ),
+						'eyebrow'   => __( 'PROJELER', 'ktuehk' ),
+						'title'     => __( 'Benzer Projeler', 'ktuehk' ),
 						'id'        => 'related-title',
 						'link'      => get_post_type_archive_link( ktuehk_project_type() ),
-						'link_text' => __( 'Tüm projeler', 'ktuehk' ),
+						'link_text' => __( 'Tüm Projeleri Gör', 'ktuehk' ),
 					)
 				);
 				?>

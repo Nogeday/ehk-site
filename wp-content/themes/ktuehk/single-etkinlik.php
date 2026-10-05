@@ -31,13 +31,13 @@ while ( have_posts() ) :
 				<div class="event-head">
 					<?php if ( $ktuehk_date ) : ?>
 						<time class="date-block" datetime="<?php echo esc_attr( $ktuehk_date['iso'] ); ?>">
-							<span class="date-block__month"><?php echo esc_html( $ktuehk_date['month'] ); ?></span>
 							<span class="date-block__day"><?php echo esc_html( $ktuehk_date['day'] ); ?></span>
+							<span class="date-block__month"><?php echo esc_html( $ktuehk_date['month'] ); ?></span>
 							<span class="date-block__year"><?php echo esc_html( $ktuehk_date['year'] ); ?></span>
 						</time>
 					<?php endif; ?>
 					<div class="event-head__text">
-						<p class="card__eyebrow">
+						<p class="card__badges">
 							<?php if ( $ktuehk_upcoming ) : ?>
 								<span class="badge badge--green"><?php esc_html_e( 'Yaklaşan etkinlik', 'ktuehk' ); ?></span>
 							<?php elseif ( $ktuehk_date ) : ?>
@@ -223,11 +223,11 @@ while ( have_posts() ) :
 					<?php
 					ktuehk_section_head(
 						array(
-							'eyebrow'   => __( 'Takvim', 'ktuehk' ),
-							'title'     => __( 'Diğer etkinlikler', 'ktuehk' ),
+							'eyebrow'   => __( 'ETKİNLİKLER', 'ktuehk' ),
+							'title'     => __( 'Diğer Etkinlikler', 'ktuehk' ),
 							'id'        => 'more-events-title',
 							'link'      => get_post_type_archive_link( ktuehk_event_type() ),
-							'link_text' => __( 'Tüm etkinlikler', 'ktuehk' ),
+							'link_text' => __( 'Tüm Etkinlikleri Gör', 'ktuehk' ),
 						)
 					);
 					?>
@@ -235,7 +235,7 @@ while ( have_posts() ) :
 						<?php
 						foreach ( $ktuehk_more as $post ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride
 							setup_postdata( $post );
-							get_template_part( 'template-parts/card', 'event' );
+							get_template_part( 'template-parts/card', 'event-compact' );
 						endforeach;
 						$post = $ktuehk_current; // phpcs:ignore WordPress.WP.GlobalVariablesOverride
 						setup_postdata( $post );

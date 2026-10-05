@@ -42,7 +42,14 @@ $ktuehk_links = array_filter(
 		<p class="eyebrow"><?php esc_html_e( 'Hata 404', 'ktuehk' ); ?></p>
 		<h1 class="page-hero__title"><?php esc_html_e( 'Aradığınız sayfa bulunamadı', 'ktuehk' ); ?></h1>
 		<p class="page-hero__desc"><?php esc_html_e( 'Bağlantı değişmiş veya sayfa kaldırılmış olabilir. Aramayı deneyin ya da aşağıdaki bölümlerden devam edin.', 'ktuehk' ); ?></p>
-		<?php get_search_form( array( 'size' => 'large' ) ); ?>
+		<?php
+		get_search_form(
+			array(
+				'size'       => 'large',
+				'aria_label' => __( 'Aradığınızı bulun', 'ktuehk' ),
+			)
+		);
+		?>
 	</div>
 </section>
 

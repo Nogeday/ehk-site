@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'KTUEHK_VERSION', '1.0.0' );
+define( 'KTUEHK_VERSION', '1.1.0' );
 define( 'KTUEHK_DIR', get_template_directory() );
 define( 'KTUEHK_URI', get_template_directory_uri() );
 

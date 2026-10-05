@@ -39,15 +39,17 @@ while ( have_posts() ) :
 							<?php endif; ?>
 						</span>
 						<ul class="meta">
-							<li class="meta__item"><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time></li>
+							<li class="meta__item"><?php echo ktuehk_icon( 'calendar', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time></li>
 							<li class="meta__item">
 								<?php
+								echo ktuehk_icon( 'clock', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput
 								/* translators: %d: minutes */
 								echo esc_html( sprintf( __( '%d dk okuma', 'ktuehk' ), ktuehk_reading_time() ) );
 								?>
 							</li>
 							<?php if ( $ktuehk_updated ) : ?>
 								<li class="meta__item">
+									<?php echo ktuehk_icon( 'history', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 									<?php esc_html_e( 'Güncellendi:', 'ktuehk' ); ?>
 									<time datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php echo esc_html( get_the_modified_date() ); ?></time>
 								</li>
@@ -161,11 +163,11 @@ while ( have_posts() ) :
 				<?php
 				ktuehk_section_head(
 					array(
-						'eyebrow'   => __( 'Okumaya devam et', 'ktuehk' ),
-						'title'     => __( 'İlgili yazılar', 'ktuehk' ),
+						'eyebrow'   => __( 'OKUMAYA DEVAM ET', 'ktuehk' ),
+						'title'     => __( 'İlgili Yazılar', 'ktuehk' ),
 						'id'        => 'related-title',
 						'link'      => ktuehk_posts_url(),
-						'link_text' => __( 'Tüm yazılar', 'ktuehk' ),
+						'link_text' => __( 'Tüm Yazıları Gör', 'ktuehk' ),
 					)
 				);
 				?>
