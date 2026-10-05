@@ -25,7 +25,7 @@ if ( have_posts() ) :
 				'post',
 				array(
 					'heading'  => 'h2',
-					'featured' => $ktuehk_feature && 1 === $ktuehk_index && has_post_thumbnail(),
+					'featured' => $ktuehk_feature && 1 === $ktuehk_index && ktuehk_card_image()['id'],
 					'priority' => 1 === $ktuehk_index,
 				)
 			);

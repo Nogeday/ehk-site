@@ -299,6 +299,59 @@ function ktuehk_post_meta( $parts = array( 'author', 'date', 'reading' ), $post 
 }
 
 /**
+ * Image for a card: the featured image or, when none is set, the first
+ * image in the content (media library image, attached image or plain URL).
+ *
+ * @param int|WP_Post|null $post Post.
+ * @return array{id:int,url:string}
+ */
+function ktuehk_card_image( $post = null ) {
+	static $cache = array();
+	$post  = get_post( $post );
+	$found = array(
+		'id'  => 0,
+		'url' => '',
+	);
+	if ( ! $post ) {
+		return $found;
+	}
+	if ( isset( $cache[ $post->ID ] ) ) {
+		return $cache[ $post->ID ];
+	}
+
+	$found['id'] = (int) get_post_thumbnail_id( $post );
+	if ( ! $found['id'] ) {
+		$content = (string) $post->post_content;
+		if ( preg_match( '/wp-image-(\d+)|<!-- wp:image \{[^}]*"id":(\d+)/', $content, $m ) ) {
+			$found['id'] = (int) ( ! empty( $m[1] ) ? $m[1] : $m[2] );
+		}
+		if ( ! $found['id'] ) {
+			$attached = get_children(
+				array(
+					'post_parent'    => $post->ID,
+					'post_type'      => 'attachment',
+					'post_mime_type' => 'image',
+					'numberposts'    => 1,
+					'orderby'        => 'menu_order ID',
+					'order'          => 'ASC',
+					'fields'         => 'ids',
+				)
+			);
+			$found['id'] = $attached ? (int) reset( $attached ) : 0;
+		}
+		if ( $found['id'] && ! wp_attachment_is_image( $found['id'] ) ) {
+			$found['id'] = 0;
+		}
+		if ( ! $found['id'] && preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/i', $content, $m ) ) {
+			$found['url'] = $m[1];
+		}
+	}
+
+	$cache[ $post->ID ] = (array) apply_filters( 'ktuehk_card_image', $found, $post );
+	return $cache[ $post->ID ];
+}
+
+/**
  * Image or a neutral technical placeholder for cards and covers.
  *
  * @param array            $args {
@@ -314,11 +367,12 @@ function ktuehk_post_meta( $parts = array( 'author', 'date', 'reading' ), $post 
  * @return string
  */
 function ktuehk_media( $args = array(), $post = null ) {
-	$post = get_post( $post );
-	$args = wp_parse_args(
+	$post  = get_post( $post );
+	$image = ktuehk_card_image( $post );
+	$args  = wp_parse_args(
 		$args,
 		array(
-			'image_id' => $post ? (int) get_post_thumbnail_id( $post ) : 0,
+			'image_id' => $image['id'],
 			'size'     => 'medium_large',
 			'sizes'    => '(min-width: 1200px) 380px, (min-width: 640px) 50vw, 100vw',
 			'class'    => 'card__media',
@@ -343,6 +397,17 @@ function ktuehk_media( $args = array(), $post = null ) {
 			$attrs['loading'] = 'lazy';
 		}
 		return '<div class="' . esc_attr( $class ) . '">' . wp_get_attachment_image( $args['image_id'], $args['size'], false, $attrs ) . '</div>';
+	}
+
+	// Image inserted into the content by URL only (not in the media library).
+	if ( ! $args['image_id'] && $image['url'] ) {
+		return sprintf(
+			'<div class="%1$s"><img src="%2$s" alt="%3$s" %4$s decoding="async"></div>',
+			esc_attr( $class ),
+			esc_url( $image['url'] ),
+			esc_attr( $post ? get_the_title( $post ) : '' ),
+			$args['priority'] ? 'fetchpriority="high"' : 'loading="lazy"'
+		);
 	}
 
 	return '<div class="' . esc_attr( $class ) . ' media-ph" aria-hidden="true">' . ktuehk_icon( $args['icon'], 32 ) . '</div>';

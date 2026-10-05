@@ -23,7 +23,7 @@ $ktuehk_upcoming = ktuehk_is_upcoming();
 $ktuehk_time     = ktuehk_event_time_range();
 $ktuehk_place    = ktuehk_field( 'konum' );
 $ktuehk_online   = '1' === ktuehk_field( 'cevrimici' );
-$ktuehk_image    = (int) get_post_thumbnail_id();
+$ktuehk_image    = ktuehk_card_image()['id'];
 $ktuehk_poster   = absint( ktuehk_field( 'afis' ) );
 ?>
 <article <?php post_class( 'card card--event ' . ( $ktuehk_upcoming ? 'is-upcoming' : 'is-past' ) ); ?>>

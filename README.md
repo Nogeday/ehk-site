@@ -101,7 +101,7 @@ Tema etkinleştirildiğinde panelde **"KTÜ EHK teması — önerilen kurulum"**
 
 ### Yeni yazı (Yazılar)
 - **Kategori** seçin (Elektronik, Haberleşme, RF ve Anten, Gömülü Sistemler…). Kategoriler yazılar sayfasında filtre olarak görünür.
-- **Öne çıkan görsel** ekleyin (kartlarda 16:9 kırpılır, yazı sayfasında kapak olur). Görselin *Alternatif metin* alanını doldurun.
+- **Öne çıkan görsel** ekleyin (kartlarda kırpılarak gösterilir, yazı sayfasında kapak olur). Görselin *Alternatif metin* alanını doldurun. Öne çıkan görsel seçilmemişse kartta yazının içindeki ilk görsel kullanılır; yazıda hiç görsel yoksa sade bir ikon gösterilir.
 - **Özet** alanı kartlarda ve yazı başlığının altında giriş metni olarak kullanılır; arama motoru açıklaması da buradan gelir.
 - Yazıyı bir öğrenci adına yayımlıyorsanız sağdaki **Yazar Bilgisi** kutusuna adını ve kısa bilgisini girin.
 - En az üç ara başlık (H2/H3) olan yazılarda **"Bu yazıda" içindekiler** listesi otomatik oluşur.
