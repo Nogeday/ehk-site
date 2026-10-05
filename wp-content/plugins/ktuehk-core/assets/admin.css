@@ -1,0 +1,34 @@
+/* KTÜ EHK Çekirdek — admin field layout */
+.ehk-fields { display: flex; flex-wrap: wrap; gap: 14px 16px; padding: 4px 0; }
+.ehk-fields__intro { flex: 1 1 100%; margin: 0 0 4px; color: #50575e; font-size: 13px; }
+.ehk-field { flex: 1 1 100%; min-width: 0; }
+.ehk-field--half { flex-basis: calc(50% - 8px); }
+.ehk-field--third { flex-basis: calc(33.333% - 11px); }
+.ehk-field__label { display: block; margin-bottom: 4px; font-weight: 600; }
+.ehk-field .description { margin-top: 4px; }
+.ehk-field--checkbox { align-self: end; padding-bottom: 6px; }
+.ehk-check { display: inline-flex; gap: 6px; align-items: center; font-weight: 600; }
+.ehk-field textarea { min-height: 84px; }
+.ehk-fields--side .ehk-field { flex-basis: 100%; }
+.ehk-media__preview img { display: block; max-width: 150px; height: auto; margin-bottom: 8px; border-radius: 4px; }
+.ehk-media__grid { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; }
+.ehk-media__grid:empty { display: none; }
+.ehk-media__grid li { margin: 0; }
+.ehk-media__grid img { display: block; width: 72px; height: 72px; object-fit: cover; border-radius: 4px; }
+@media (max-width: 782px) {
+	.ehk-field--half, .ehk-field--third { flex-basis: 100%; }
+}
+
+/* List tables */
+.column-ehk_thumb { width: 56px; }
+.ehk-col-thumb { display: block; width: 48px; height: 48px; object-fit: cover; border-radius: 4px; }
+.ehk-col-thumb--empty { background: #f0f0f1; }
+.column-ehk_year, .column-ehk_featured { width: 80px; }
+.column-ehk_status { width: 120px; }
+.column-ehk_featured .dashicons { color: #dba617; }
+.ehk-pill { display: inline-block; padding: 1px 8px; border-radius: 999px; background: #f0f0f1; color: #3c434a; font-size: 12px; line-height: 20px; }
+.ehk-pill--tamamlandi { background: #e6f4ec; color: #145c38; }
+.ehk-pill--devam-ediyor, .ehk-pill--upcoming { background: #e5f0fb; color: #0b4a96; }
+.ehk-muted { color: #8c8f94; }
+#dashboard_right_now .ehk-glance::before { content: "\f339"; }
+#dashboard_right_now .ehk-glance--etkinlik::before { content: "\f508"; }
