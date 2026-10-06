@@ -42,7 +42,7 @@ Geliştirme ortamından `ktuehk.com.tr` adresine erişilemedi (ağ politikası e
 - Sitede zaten bir **proje/etkinlik içerik türü** varsa yeniden oluşturulmaz; **Ayarlar › KTÜ EHK** ekranından anahtarı ve URL ön eki girilerek mevcut tür benimsenir (aşağıya bakın).
 - Bir **SEO eklentisi** (Yoast, Rank Math, AIOSEO, SEOPress, The SEO Framework, Slim SEO) varsa meta etiketleri ve şema ona bırakılır; tema yalnızca SEO eklentilerinin üretmediği Event şemasını ekler.
 - Eski temanın **logosu ve sosyal medya bağlantıları** tema değiştirildiğinde otomatik taşınır.
-- **İletişim sayfasına ve içeriğine dokunulmaz.** Mevcut menünüzde İletişim bağlantısı varsa olduğu gibi kalır. Tema hiçbir yerde iletişim bilgisi (telefon, e-posta, adres) üretmez, tekrarlamaz veya öne çıkarmaz; alt bilgide yalnızca üniversite/bölüm adı yazar.
+- **İletişim bilgileri uydurulmaz.** E-posta, Instagram, LinkedIn ve harita bilgileri yalnızca *Özelleştir › İletişim ve sosyal medya* ekranından girilen değerlerden gelir. Girilmeyenler sitede "Yakında eklenecek" olarak görünür veya gizlenir. Mevcut `iletisim` sayfasının eski editör içeriği silinmez, yalnızca yeni düzende gösterilmez.
 
 Canlıya almadan önce aşağıdaki kontrol listesini bir **hazırlık (staging) kopyasında** uygulamanız önerilir.
 
@@ -73,6 +73,10 @@ Tema etkinleştirildiğinde panelde **"KTÜ EHK teması — önerilen kurulum"**
 - Ana sayfa "son yazılar" gösteriyorsa statik bir *Ana Sayfa* sayfası atanır (adres değişmez).
 - Yazı listesi sayfası yoksa *Yazılar* sayfası (`/yazilar/`) oluşturulup atanır; `yazilar` adlı bir sayfa zaten varsa o kullanılır.
 - *Hakkımızda* sayfası yoksa, düzenlenebilir hazır içerikle **taslak** olarak oluşturulur. İnceleyip yayımlayın.
+- *İletişim* sayfası (`/iletisim/`) yoksa oluşturulur; taslak hâlinde varsa yayımlanır.
+- Atanmış menüde İletişim yoksa 6 bağlantılı "KTÜ EHK Ana Menü" oluşturulup üst menü ve alt bilgiye atanır.
+
+Tema güncellendiğinde yeni adımlar varsa bu kutu bir kez daha görünür.
 
 ### 4. Kontrol edin
 - *Ayarlar › Genel › Site Dili*: **Türkçe** olmalı (tarih ve ay adları için; ör. etkinlik kutularında "18 EKİ 2026").
@@ -93,7 +97,7 @@ Tema etkinleştirildiğinde panelde **"KTÜ EHK teması — önerilen kurulum"**
 | Eski temanın **widget**'ları vardı | Bu temada widget alanı yoktur; widget'lar silinmez, *Görünüm › Widget'lar* altında "Etkin olmayan" olarak saklanır. |
 | **Logo** | Eski temadaki logo otomatik taşınır ve beyaz üst menüde olduğu gibi görünür. Koyu alt bilgide (ve menü rengi "KTÜ mavisi" seçilirse üst menüde) logo beyaz bir kutucukta gösterilir; logonun beyaz bir versiyonu varsa *Özelleştir › Üst menü › Koyu zemin logosu* alanına yükleyin. Logo yoksa temanın "KTÜ EHK" yazı logosu kullanılır. |
 | **Sosyal medya** | Eski tema ayarlarında bulunan Instagram, LinkedIn, GitHub, YouTube, X, Discord, Telegram, Medium bağlantıları otomatik taşınır. Eksik olanları *Özelleştir › Sosyal medya*'dan ekleyin. |
-| **İletişim** | İletişim sayfası, adresi ve içeriği olduğu gibi kalır; tema bu sayfayı değiştirmez. Menüde görünmesi için mevcut menünüzü kullanın veya *Görünüm › Menüler*'den ekleyin. |
+| **İletişim** | `/iletisim/` adresli sayfa otomatik olarak yeni İletişim düzenini kullanır (adres değişmez). Sayfa yoksa önerilen kurulum oluşturur. Bilgileri *Özelleştir › İletişim ve sosyal medya*'dan girin (aşağıya bakın). |
 
 ---
 
@@ -124,6 +128,22 @@ Tema etkinleştirildiğinde panelde **"KTÜ EHK teması — önerilen kurulum"**
 - **Etkinlik Bilgileri**: Başlangıç, Bitiş (isteğe bağlı), Konum, Harita bağlantısı, Çevrim içi, Kayıt bağlantısı, Konuşmacılar.
 - **Afiş ve Fotoğraflar**: afiş kırpılmadan gösterilir; etkinlik sonrası fotoğrafları galeriye ekleyin.
 - Etkinlik, bitiş saatine kadar (bitiş yoksa başladığı günün sonuna kadar) **Yaklaşan** olarak listelenir, sonra otomatik olarak **Geçmiş** etkinliklere geçer. Yaklaşan etkinlikte "Kayıt ol" ve "Takvime ekle" (.ics) düğmeleri görünür.
+
+### İletişim sayfası ve iletişim bilgileri
+`/iletisim/` sayfası iki sütunludur: solda **E-posta, Instagram, LinkedIn** kartları, sağda **Google Haritalar** haritası, adres ve "Google Maps'te Yol Tarifi Al" düğmesi (mobilde tek sütun).
+
+Bütün bilgiler tek yerden yönetilir: **Görünüm › Özelleştir › KTÜ EHK Tema Ayarları › İletişim ve sosyal medya**
+
+| Alan | Nerede kullanılır |
+| --- | --- |
+| E-posta adresi | İletişim kartı (`mailto:`), alt bilgideki e-posta ikonu |
+| Instagram, LinkedIn (ve diğer hesaplar) | İletişim kartları, alt bilgideki sosyal medya ikonları |
+| Google Haritalar yerleştirme adresi | Harita. Google Haritalar › Paylaş › **Harita yerleştir** kodunu olduğu gibi yapıştırabilirsiniz; adres otomatik ayıklanır (yalnızca Google Haritalar adresleri kabul edilir). |
+| Google Haritalar yol tarifi bağlantısı | "Google Maps'te Yol Tarifi Al" düğmesi. Google Haritalar › Paylaş › Bağlantıyı kopyala. |
+
+Alanlar boşken tema kodundaki yer tutucular (`[EMAIL]`, `[INSTAGRAM_URL]`, `[LINKEDIN_URL]`, `[GOOGLE_MAPS_EMBED_URL]`, `[GOOGLE_MAPS_DIRECTIONS_URL]`, dosya: `inc/contact.php`) kullanılır. Bu durumda ziyaretçiler kartta "Yakında eklenecek" görür; yöneticiler hangi ayarın eksik olduğunu ve ayar bağlantısını görür. Sayfa açıklaması *Ana sayfa ve bölüm metinleri › İletişim sayfası açıklaması* alanından veya sayfanın **Özet** alanından değiştirilebilir.
+
+**Menü:** Üst menüde ve alt bilgide sıra *Ana Sayfa, Yazılar, Projeler, Etkinlikler, Hakkımızda, İletişim* şeklindedir. Sitede atanmış bir menü varsa ve İletişim bağlantısı içermiyorsa, tema güncellendikten sonra panelde çıkan **önerilen kurulum** kutusu yeni bir "KTÜ EHK Ana Menü" oluşturup üst menü ve alt bilgiye atar (eski menü silinmez). Elle yapmak isterseniz *Görünüm › Menüler*'den İletişim sayfasını menünün sonuna ekleyin.
 
 ### Hakkımızda sayfası
 Metinler normal sayfa içeriğidir ve editörden değiştirilebilir. Dinamik bölümler kısa kodlarla eklenir ve istenen yere taşınabilir:

@@ -7,8 +7,13 @@
  *    page with the slug "yazilar" when present),
  *  - switches the front page to a static page only if it currently shows
  *    the latest posts (re-using "ana-sayfa" when present),
- *  - creates a "Hakkımızda" page only if no about page exists.
- * Every step is listed before the admin confirms.
+ *  - creates a "Hakkımızda" page only if no about page exists,
+ *  - creates (or publishes) the "İletişim" page at /iletisim/,
+ *  - creates a new "KTÜ EHK Ana Menü" with the six main links and assigns
+ *    it to the header and footer, when the assigned menu has no contact
+ *    link. The previous menu is kept under Görünüm › Menüler.
+ * Every step is listed before the admin confirms. After a theme update
+ * the notice comes back once if new steps apply.
  *
  * @package KTUEHK
  */
@@ -34,8 +39,89 @@ function ktuehk_setup_steps() {
 	if ( ! ktuehk_about_page() ) {
 		$steps['about'] = __( '"Hakkımızda" sayfası, düzenlenebilir hazır içerikle taslak olarak oluşturulacak.', 'ktuehk' );
 	}
+	if ( ! ktuehk_contact_page() ) {
+		$existing         = get_page_by_path( 'iletisim' );
+		$steps['contact'] = $existing
+			? __( 'Mevcut "iletisim" sayfası yayımlanacak ve yeni İletişim düzenini kullanacak (/iletisim/).', 'ktuehk' )
+			: __( '"İletişim" sayfası oluşturulacak (/iletisim/).', 'ktuehk' );
+	}
+	if ( ktuehk_menu_needs_contact() ) {
+		$steps['menu'] = __( 'Üst menü ve alt bilgi için "KTÜ EHK Ana Menü" (Ana Sayfa, Yazılar, Projeler, Etkinlikler, Hakkımızda, İletişim) oluşturulup atanacak. Mevcut menünüz silinmez, Görünüm › Menüler ekranında kalır.', 'ktuehk' );
+	}
 	return $steps;
 }
+
+/**
+ * Whether the header menu is a custom menu without a contact link.
+ *
+ * @return bool
+ */
+function ktuehk_menu_needs_contact() {
+	$locations = get_nav_menu_locations();
+	if ( empty( $locations['primary'] ) || ! wp_get_nav_menu_object( $locations['primary'] ) ) {
+		return false; // The built-in fallback menu already lists İletişim.
+	}
+	foreach ( (array) wp_get_nav_menu_items( $locations['primary'] ) as $item ) {
+		if ( false !== strpos( (string) $item->url, '/iletisim' ) ) {
+			return false;
+		}
+	}
+	return true;
+}
+
+/**
+ * Create (or reuse) "KTÜ EHK Ana Menü" and assign it to header and footer.
+ */
+function ktuehk_setup_menu() {
+	$name = __( 'KTÜ EHK Ana Menü', 'ktuehk' );
+	$menu = wp_get_nav_menu_object( $name );
+	$id   = $menu ? (int) $menu->term_id : wp_create_nav_menu( $name );
+	if ( ! $id || is_wp_error( $id ) ) {
+		return;
+	}
+	$existing = array();
+	foreach ( (array) wp_get_nav_menu_items( $id ) as $item ) {
+		$existing[] = untrailingslashit( (string) $item->url );
+	}
+	$position = count( $existing );
+	foreach ( ktuehk_default_menu_items() as $item ) {
+		if ( in_array( untrailingslashit( $item['url'] ), $existing, true ) ) {
+			continue;
+		}
+		$page_id = (int) url_to_postid( $item['url'] );
+		$args    = array(
+			'menu-item-title'    => $item['label'],
+			'menu-item-status'   => 'publish',
+			'menu-item-position' => ++$position,
+		);
+		if ( $page_id && 'page' === get_post_type( $page_id ) && (int) get_option( 'page_on_front' ) !== $page_id ) {
+			$args['menu-item-type']      = 'post_type';
+			$args['menu-item-object']    = 'page';
+			$args['menu-item-object-id'] = $page_id;
+		} else {
+			$args['menu-item-type'] = 'custom';
+			$args['menu-item-url']  = $item['url'];
+		}
+		wp_update_nav_menu_item( $id, 0, $args );
+	}
+	$locations            = get_nav_menu_locations();
+	$locations['primary'] = $id;
+	$locations['footer']  = $id;
+	set_theme_mod( 'nav_menu_locations', $locations );
+}
+
+/**
+ * Show the setup notice again once after a theme update.
+ */
+function ktuehk_setup_on_update() {
+	if ( get_option( 'ktuehk_setup_version' ) === KTUEHK_VERSION ) {
+		return;
+	}
+	update_option( 'ktuehk_setup_version', KTUEHK_VERSION );
+	update_option( 'ktuehk_setup_notice', 1 );
+}
+add_action( 'admin_init', 'ktuehk_setup_on_update' );
+
 
 /**
  * Show admin notices.
@@ -154,6 +240,38 @@ function ktuehk_handle_setup() {
 				'post_content' => ktuehk_about_default_content(),
 			)
 		);
+	}
+
+	if ( isset( $steps['contact'] ) ) {
+		$contact = get_page_by_path( 'iletisim' );
+		$intro   = __( 'KTÜ Elektronik ve Haberleşme Kulübü ile iletişime geçin.', 'ktuehk' );
+		if ( $contact ) {
+			$update = array(
+				'ID'          => $contact->ID,
+				'post_status' => 'publish',
+			);
+			if ( '' === trim( (string) $contact->post_excerpt ) ) {
+				$update['post_excerpt'] = $intro;
+			}
+			wp_update_post( wp_slash( $update ) );
+		} else {
+			wp_insert_post(
+				array(
+					'post_type'    => 'page',
+					'post_status'  => 'publish',
+					'post_title'   => __( 'İletişim', 'ktuehk' ),
+					'post_name'    => 'iletisim',
+					'post_excerpt' => $intro,
+				)
+			);
+		}
+	}
+
+	if ( isset( $steps['menu'] ) || isset( $steps['contact'] ) ) {
+		ktuehk_contact_page( true );
+		if ( ktuehk_menu_needs_contact() ) {
+			ktuehk_setup_menu();
+		}
 	}
 
 	flush_rewrite_rules();

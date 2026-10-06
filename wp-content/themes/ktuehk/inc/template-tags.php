@@ -197,6 +197,14 @@ function ktuehk_default_menu_items() {
 			'current' => is_page( $about->ID ),
 		);
 	}
+	$contact = function_exists( 'ktuehk_contact_page' ) ? ktuehk_contact_page() : null;
+	if ( $contact ) {
+		$items[] = array(
+			'label'   => __( 'İletişim', 'ktuehk' ),
+			'url'     => (string) get_permalink( $contact ),
+			'current' => is_page( $contact->ID ),
+		);
+	}
 	return (array) apply_filters( 'ktuehk_default_menu_items', $items );
 }
 

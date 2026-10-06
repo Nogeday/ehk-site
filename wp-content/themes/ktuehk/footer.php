@@ -2,15 +2,15 @@
 /**
  * Site footer: brand, university, quick links, social media.
  *
- * Contact details are intentionally not repeated here; the existing contact
- * page is only linked (through the menu) so it can be revised separately.
+ * Social accounts and e-mail come from the central contact settings
+ * (inc/contact.php); placeholders that were not filled in are not shown.
  *
  * @package KTUEHK
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$ktuehk_social = ktuehk_social_links();
+$ktuehk_social = ktuehk_footer_social_links();
 ?>
 </main>
 
@@ -22,9 +22,7 @@ $ktuehk_social = ktuehk_social_links();
 			</div>
 
 			<address class="footer-uni">
-				<?php esc_html_e( 'Karadeniz Teknik Üniversitesi', 'ktuehk' ); ?><br>
-				<?php esc_html_e( 'Teknoloji Fakültesi', 'ktuehk' ); ?><br>
-				<?php esc_html_e( 'Elektronik ve Haberleşme Mühendisliği', 'ktuehk' ); ?>
+				<?php echo implode( '<br>', array_map( 'esc_html', ktuehk_address_lines() ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped per line. ?>
 			</address>
 
 			<nav class="footer-col" aria-labelledby="footer-links-title">
@@ -48,9 +46,8 @@ $ktuehk_social = ktuehk_social_links();
 					<ul class="social">
 						<?php foreach ( $ktuehk_social as $ktuehk_link ) : ?>
 							<li>
-								<a class="social__link" href="<?php echo esc_url( $ktuehk_link['url'] ); ?>" rel="noopener me" target="_blank">
-									<?php echo ktuehk_icon( 'brand-' . $ktuehk_link['key'], 20 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-									<span class="screen-reader-text"><?php echo esc_html( $ktuehk_link['label'] ); ?></span>
+								<a class="social__link" href="<?php echo esc_url( $ktuehk_link['url'], array( 'http', 'https', 'mailto' ) ); ?>" aria-label="<?php echo esc_attr( $ktuehk_link['label'] ); ?>"<?php echo $ktuehk_link['external'] ? ' rel="noopener me" target="_blank"' : ''; ?>>
+									<?php echo ktuehk_icon( $ktuehk_link['icon'], 20 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 								</a>
 							</li>
 						<?php endforeach; ?>

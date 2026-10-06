@@ -25,6 +25,7 @@ function ktuehk_mod_defaults() {
 		'intro_posts'    => __( 'Elektronik, haberleşme, gömülü sistemler ve ağ teknolojileri üzerine kulüp üyelerinin hazırladığı teknik ve bilimsel yazılar.', 'ktuehk' ),
 		'intro_projects' => __( 'Öğrencilerimiz tarafından geliştirilen teknik çalışmalar.', 'ktuehk' ),
 		'intro_events'   => __( 'Workshop, seminer, teknik eğitim ve gezilerimiz. Yaklaşan etkinliklere katılın, geçmiş etkinliklerden notlara ve fotoğraflara göz atın.', 'ktuehk' ),
+		'intro_contact'  => __( 'KTÜ Elektronik ve Haberleşme Kulübü ile iletişime geçin.', 'ktuehk' ),
 	);
 }
 
@@ -172,6 +173,7 @@ function ktuehk_customize_register( $wp_customize ) {
 		'intro_posts'    => array( __( 'Teknik Yazılar sayfası açıklaması', 'ktuehk' ), 'textarea' ),
 		'intro_projects' => array( __( 'Projeler sayfası açıklaması', 'ktuehk' ), 'textarea' ),
 		'intro_events'   => array( __( 'Etkinlikler sayfası açıklaması', 'ktuehk' ), 'textarea' ),
+		'intro_contact'  => array( __( 'İletişim sayfası açıklaması', 'ktuehk' ), 'textarea' ),
 	);
 	foreach ( $texts as $key => $config ) {
 		$wp_customize->add_setting(
@@ -191,15 +193,67 @@ function ktuehk_customize_register( $wp_customize ) {
 		);
 	}
 
-	// Social.
+	// Contact & social media: the single place for e-mail, accounts and map.
 	$wp_customize->add_section(
 		'ktuehk_social',
 		array(
-			'title'       => __( 'Sosyal medya', 'ktuehk' ),
+			'title'       => __( 'İletişim ve sosyal medya', 'ktuehk' ),
 			'panel'       => 'ktuehk',
-			'description' => __( 'Yalnızca doldurulan hesaplar alt bilgide gösterilir.', 'ktuehk' ),
+			'description' => __( 'İletişim sayfası, alt bilgi ve sosyal medya ikonları bu bilgileri kullanır. Boş bırakılan alanlar sitede "Yakında eklenecek" olarak görünür veya gizlenir.', 'ktuehk' ),
 		)
 	);
+	$wp_customize->add_setting(
+		'ktuehk_contact_email',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_email',
+		)
+	);
+	$wp_customize->add_control(
+		'ktuehk_contact_email',
+		array(
+			'label'       => __( 'E-posta adresi', 'ktuehk' ),
+			'description' => __( 'Kulübün resmi e-posta adresi (ör. kulup@…).', 'ktuehk' ),
+			'section'     => 'ktuehk_social',
+			'type'        => 'email',
+			'priority'    => 1,
+		)
+	);
+	$wp_customize->add_setting(
+		'ktuehk_maps_embed',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'ktuehk_sanitize_maps_embed',
+		)
+	);
+	$wp_customize->add_control(
+		'ktuehk_maps_embed',
+		array(
+			'label'       => __( 'Google Haritalar yerleştirme adresi', 'ktuehk' ),
+			'description' => __( 'Google Haritalar › Paylaş › Harita yerleştir ekranındaki kodu olduğu gibi yapıştırabilirsiniz; adres otomatik ayıklanır.', 'ktuehk' ),
+			'section'     => 'ktuehk_social',
+			'type'        => 'textarea',
+			'priority'    => 4,
+		)
+	);
+	$wp_customize->add_setting(
+		'ktuehk_maps_directions',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'esc_url_raw',
+		)
+	);
+	$wp_customize->add_control(
+		'ktuehk_maps_directions',
+		array(
+			'label'       => __( 'Google Haritalar yol tarifi bağlantısı', 'ktuehk' ),
+			'description' => __( 'Google Haritalar › Paylaş › Bağlantıyı kopyala ile alınan adres.', 'ktuehk' ),
+			'section'     => 'ktuehk_social',
+			'type'        => 'url',
+			'priority'    => 5,
+		)
+	);
+	$priority = 2;
 	foreach ( ktuehk_social_networks() as $key => $label ) {
 		$wp_customize->add_setting(
 			'ktuehk_social_' . $key,
@@ -211,9 +265,10 @@ function ktuehk_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			'ktuehk_social_' . $key,
 			array(
-				'label'   => $label,
-				'section' => 'ktuehk_social',
-				'type'    => 'url',
+				'label'    => $label,
+				'section'  => 'ktuehk_social',
+				'type'     => 'url',
+				'priority' => in_array( $key, array( 'instagram', 'linkedin' ), true ) ? $priority++ : 10,
 			)
 		);
 	}
