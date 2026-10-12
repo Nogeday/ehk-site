@@ -76,7 +76,8 @@ if ( $ktuehk_has_projects ) :
 			)
 		);
 	}
-	if ( $ktuehk_projects || $ktuehk_can_edit ) :
+	// Hidden entirely until the first project is published.
+	if ( $ktuehk_projects ) :
 		?>
 		<section class="section section--alt" aria-labelledby="projects-title">
 			<div class="container">
@@ -86,37 +87,21 @@ if ( $ktuehk_has_projects ) :
 						'eyebrow'   => __( 'PROJELER', 'ktuehk' ),
 						'title'     => __( 'Öne Çıkan Projeler', 'ktuehk' ),
 						'id'        => 'projects-title',
-						'link'      => $ktuehk_projects ? $ktuehk_projects_url : '',
+						'link'      => $ktuehk_projects_url,
 						'link_text' => __( 'Tüm Projeleri Gör', 'ktuehk' ),
 					)
 				);
-				if ( $ktuehk_projects ) :
-					?>
-					<div class="grid grid--3">
-						<?php
-						global $post;
-						foreach ( $ktuehk_projects as $post ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride
-							setup_postdata( $post );
-							get_template_part( 'template-parts/card', 'project' );
-						endforeach;
-						wp_reset_postdata();
-						?>
-					</div>
-				<?php else : ?>
+				?>
+				<div class="grid grid--3">
 					<?php
-					get_template_part(
-						'template-parts/empty-state',
-						null,
-						array(
-							'icon'       => 'cpu',
-							'title'      => __( 'Henüz proje eklenmedi', 'ktuehk' ),
-							'text'       => __( 'Bu bölüm yalnızca yöneticilere görünüyor; proje eklendiğinde ziyaretçilere gösterilecek.', 'ktuehk' ),
-							'admin_link' => admin_url( 'post-new.php?post_type=' . $ktuehk_project_type ),
-							'admin_text' => __( 'Yeni proje ekle', 'ktuehk' ),
-						)
-					);
+					global $post;
+					foreach ( $ktuehk_projects as $post ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride
+						setup_postdata( $post );
+						get_template_part( 'template-parts/card', 'project' );
+					endforeach;
+					wp_reset_postdata();
 					?>
-				<?php endif; ?>
+				</div>
 			</div>
 		</section>
 		<?php
@@ -131,7 +116,8 @@ $ktuehk_posts = get_posts(
 		'no_found_rows'       => true,
 	)
 );
-if ( $ktuehk_posts || $ktuehk_can_edit ) :
+// Hidden entirely until the first article is published.
+if ( $ktuehk_posts ) :
 	?>
 	<section class="section" aria-labelledby="posts-title">
 		<div class="container">
@@ -141,37 +127,21 @@ if ( $ktuehk_posts || $ktuehk_can_edit ) :
 					'eyebrow'   => __( 'TEKNİK YAZILAR', 'ktuehk' ),
 					'title'     => __( 'Son Teknik Yazılar', 'ktuehk' ),
 					'id'        => 'posts-title',
-					'link'      => $ktuehk_posts ? $ktuehk_posts_url : '',
+					'link'      => $ktuehk_posts_url,
 					'link_text' => __( 'Tüm Yazıları Gör', 'ktuehk' ),
 				)
 			);
-			if ( $ktuehk_posts ) :
-				?>
-				<div class="grid grid--4">
-					<?php
-					global $post;
-					foreach ( $ktuehk_posts as $post ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride
-						setup_postdata( $post );
-						get_template_part( 'template-parts/card', 'post', array( 'sizes' => '(min-width: 1200px) 290px, (min-width: 640px) 50vw, 100vw' ) );
-					endforeach;
-					wp_reset_postdata();
-					?>
-				</div>
-			<?php else : ?>
+			?>
+			<div class="grid grid--4">
 				<?php
-				get_template_part(
-					'template-parts/empty-state',
-					null,
-					array(
-						'icon'       => 'file-text',
-						'title'      => __( 'Henüz yazı yayımlanmadı', 'ktuehk' ),
-						'text'       => __( 'Bu bölüm yalnızca yöneticilere görünüyor.', 'ktuehk' ),
-						'admin_link' => admin_url( 'post-new.php' ),
-						'admin_text' => __( 'Yeni yazı ekle', 'ktuehk' ),
-					)
-				);
+				global $post;
+				foreach ( $ktuehk_posts as $post ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride
+					setup_postdata( $post );
+					get_template_part( 'template-parts/card', 'post', array( 'sizes' => '(min-width: 1200px) 290px, (min-width: 640px) 50vw, 100vw' ) );
+				endforeach;
+				wp_reset_postdata();
 				?>
-			<?php endif; ?>
+			</div>
 		</div>
 	</section>
 	<?php

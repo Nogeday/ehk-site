@@ -39,7 +39,7 @@ function ktuehk_icon( $name, $size = 20, $class = '' ) {
 }
 
 /**
- * Site brand: custom logo if set, otherwise a text logo with a small mark.
+ * Site brand: custom logo if set, otherwise the club emblem with the name.
  *
  * The blue header and the footer have dark backgrounds. There the optional
  * "logo for dark backgrounds" (Customizer) is used; without it, the regular
@@ -75,7 +75,7 @@ function ktuehk_brand( $context = 'header' ) {
 			)
 		);
 	} else {
-		echo ktuehk_brand_mark(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG.
+		echo ktuehk_brand_emblem(); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the function.
 		echo '<span class="brand__text">';
 		echo '<span class="brand__name">' . esc_html__( 'KTÜ EHK', 'ktuehk' ) . '</span>';
 		echo '<span class="brand__sub">' . esc_html__( 'Elektronik ve Haberleşme Kulübü', 'ktuehk' ) . '</span>';
@@ -85,17 +85,18 @@ function ktuehk_brand( $context = 'header' ) {
 }
 
 /**
- * Brand mark: an open ring (radiation pattern) around an arch-shaped
- * antenna element. Drawn with currentColor so it adapts to light and dark
- * backgrounds.
+ * Club emblem shipped with the theme (used when no custom logo is set).
  *
+ * @param int $size Display size in pixels.
  * @return string
  */
-function ktuehk_brand_mark() {
-	return '<svg class="brand__mark" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" aria-hidden="true" focusable="false">'
-		. '<path d="M12.2 35.6A16.5 16.5 0 1 1 27.8 35.6" stroke-width="4.4" stroke-linecap="round"/>'
-		. '<path d="M14.6 38V22.6a5.4 5.4 0 0 1 10.8 0V38" stroke-width="4.4"/>'
-		. '</svg>';
+function ktuehk_brand_emblem( $size = 46 ) {
+	return sprintf(
+		'<img class="brand__emblem" src="%1$s" srcset="%1$s 1x, %2$s 2x" width="%3$d" height="%3$d" alt="" decoding="async">',
+		esc_url( KTUEHK_URI . '/assets/images/ktuehk-logo-96.png' ),
+		esc_url( KTUEHK_URI . '/assets/images/ktuehk-logo-192.png' ),
+		(int) $size
+	);
 }
 
 /**

@@ -140,7 +140,7 @@ while ( have_posts() ) :
 				<h2 class="contact-col__title" id="contact-map-title"><?php esc_html_e( 'Konumumuz', 'ktuehk' ); ?></h2>
 				<?php if ( ktuehk_contact_ready( 'maps_embed' ) && ktuehk_sanitize_maps_embed( ktuehk_contact( 'maps_embed' ) ) ) : ?>
 					<div class="map-frame">
-						<iframe src="<?php echo esc_url( ktuehk_contact( 'maps_embed' ) ); ?>" title="<?php esc_attr_e( 'KTÜ Teknoloji Fakültesi konumu — Google Haritalar', 'ktuehk' ); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+						<iframe src="<?php echo esc_url( ktuehk_contact( 'maps_embed' ) ); ?>" title="<?php esc_attr_e( 'KTÜ Of Teknoloji Fakültesi konumu — Google Haritalar', 'ktuehk' ); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 					</div>
 				<?php else : ?>
 					<div class="map-frame map-frame--empty">

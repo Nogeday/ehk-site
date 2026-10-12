@@ -45,7 +45,7 @@ function ktuehk_about_default_content() {
 
 	$parts = array(
 		$h2( __( 'KTÜ Elektronik ve Haberleşme Kulübü nedir?', 'ktuehk' ) ),
-		$p( __( 'KTÜ Elektronik ve Haberleşme Kulübü (KTÜ EHK), Karadeniz Teknik Üniversitesi Teknoloji Fakültesi Elektronik ve Haberleşme Mühendisliği öğrencilerinin proje geliştirdiği, birlikte öğrendiği ve ürettiklerini paylaştığı bir öğrenci topluluğudur.', 'ktuehk' ) ),
+		$p( __( 'KTÜ Elektronik ve Haberleşme Kulübü (KTÜ EHK), Karadeniz Teknik Üniversitesi Of Teknoloji Fakültesi Elektronik ve Haberleşme Mühendisliği öğrencilerinin proje geliştirdiği, birlikte öğrendiği ve ürettiklerini paylaştığı bir öğrenci topluluğudur.', 'ktuehk' ) ),
 		$p( __( 'Derslerde öğrendiğimiz teoriyi devre kartlarına, antenlere, gömülü yazılımlara ve ağ altyapılarına dönüştürmeye çalışıyoruz. Farklı sınıflardan öğrencilerin deneyimlerini paylaştığı, sorularını rahatça sorabildiği ve birlikte üretebildiği bir ortam oluşturmayı önemsiyoruz.', 'ktuehk' ) ),
 		'<!-- wp:columns {"className":"about-cards"} -->
 <div class="wp-block-columns about-cards">' . $card( __( 'Amacımız', 'ktuehk' ), __( 'Öğrencilerin teorik bilgilerini uygulamalı projelerle pekiştirmesini, teknik yetkinliklerini geliştirmesini ve mühendislik kariyerlerine güçlü bir başlangıç yapmasını desteklemek.', 'ktuehk' ) )

@@ -157,7 +157,7 @@ function ktuehk_core_field_groups() {
 					'konum'        => array(
 						'type'        => 'text',
 						'label'       => __( 'Konum', 'ktuehk-core' ),
-						'placeholder' => __( 'Örn. KTÜ Teknoloji Fakültesi, Konferans Salonu', 'ktuehk-core' ),
+						'placeholder' => __( 'Örn. KTÜ Of Teknoloji Fakültesi, Konferans Salonu', 'ktuehk-core' ),
 						'width'       => 'half',
 					),
 					'harita'       => array(

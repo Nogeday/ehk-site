@@ -59,11 +59,13 @@ $ktuehk_term_options = static function ( $taxonomy ) {
 	return is_wp_error( $terms ) ? array() : wp_list_pluck( $terms, 'name', 'slug' );
 };
 
+$ktuehk_none     = ! $ktuehk_filtered && ! $ktuehk_term && ! ktuehk_count( $ktuehk_type );
 $ktuehk_years    = function_exists( 'ktuehk_project_years' ) ? ktuehk_project_years() : array();
 $ktuehk_statuses = function_exists( 'ktuehk_project_statuses' ) ? ktuehk_project_statuses() : array();
 ?>
 <div class="section section--tight">
 	<div class="container">
+		<?php if ( ! $ktuehk_none ) : ?>
 		<form class="filters" method="get" action="<?php echo esc_url( $ktuehk_archive ); ?>" data-clean-submit aria-label="<?php esc_attr_e( 'Projeleri filtrele', 'ktuehk' ); ?>">
 			<span class="filters__title"><?php echo ktuehk_icon( 'sliders-horizontal', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Filtrele', 'ktuehk' ); ?></span>
 			<?php
@@ -86,6 +88,7 @@ $ktuehk_statuses = function_exists( 'ktuehk_project_statuses' ) ? ktuehk_project
 			echo esc_html( sprintf( _n( '%d proje listeleniyor', '%d proje listeleniyor', (int) $wp_query->found_posts, 'ktuehk' ), (int) $wp_query->found_posts ) );
 			?>
 		</p>
+		<?php endif; ?>
 
 		<?php if ( have_posts() ) : ?>
 			<div class="grid grid--3">
@@ -112,7 +115,7 @@ $ktuehk_statuses = function_exists( 'ktuehk_project_statuses' ) ? ktuehk_project
 				null,
 				array(
 					'icon'       => 'cpu',
-					'title'      => $ktuehk_filtered ? __( 'Bu filtrelere uygun proje bulunamadı', 'ktuehk' ) : __( 'Henüz proje eklenmedi', 'ktuehk' ),
+					'title'      => $ktuehk_filtered ? __( 'Bu filtrelere uygun proje bulunamadı', 'ktuehk' ) : __( 'Henüz proje eklenmedi.', 'ktuehk' ),
 					'text'       => $ktuehk_filtered ? __( 'Farklı bir yıl, kategori veya program seçmeyi deneyin.', 'ktuehk' ) : '',
 					'link'       => $ktuehk_filtered ? $ktuehk_archive : '',
 					'link_text'  => __( 'Filtreleri temizle', 'ktuehk' ),

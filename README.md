@@ -95,7 +95,7 @@ Tema güncellendiğinde yeni adımlar varsa bu kutu bir kez daha görünür.
 | Bir **SEO eklentisi** kullanılıyor | Ek işlem gerekmez; meta ve şema o eklentide kalır. |
 | Sayfalar bir **sayfa oluşturucu** (Elementor vb.) ile yapılmış | İçerik korunur. Geniş düzen gerekiyorsa sayfa ayarlarından **"Tam genişlik"** şablonunu seçin. |
 | Eski temanın **widget**'ları vardı | Bu temada widget alanı yoktur; widget'lar silinmez, *Görünüm › Widget'lar* altında "Etkin olmayan" olarak saklanır. |
-| **Logo** | Eski temadaki logo otomatik taşınır ve beyaz üst menüde olduğu gibi görünür. Koyu alt bilgide (ve menü rengi "KTÜ mavisi" seçilirse üst menüde) logo beyaz bir kutucukta gösterilir; logonun beyaz bir versiyonu varsa *Özelleştir › Üst menü › Koyu zemin logosu* alanına yükleyin. Logo yoksa temanın "KTÜ EHK" yazı logosu kullanılır. |
+| **Logo** | Eski temadaki logo otomatik taşınır ve beyaz üst menüde olduğu gibi görünür. Koyu alt bilgide (ve menü rengi "KTÜ mavisi" seçilirse üst menüde) logo beyaz bir kutucukta gösterilir; logonun beyaz bir versiyonu varsa *Özelleştir › Üst menü › Koyu zemin logosu* alanına yükleyin. Özel logo seçilmemişse tema kulüp amblemini (`assets/images/ktuehk-logo-*.png`) "KTÜ EHK" yazısıyla birlikte gösterir; *Site simgesi* seçilmemişse aynı amblem tarayıcı simgesi olarak kullanılır. Panele yüklemek için 512×512 sürüm: `assets/images/ktuehk-logo-512.png`. |
 | **Sosyal medya** | Eski tema ayarlarında bulunan Instagram, LinkedIn, GitHub, YouTube, X, Discord, Telegram, Medium bağlantıları otomatik taşınır. Eksik olanları *Özelleştir › Sosyal medya*'dan ekleyin. |
 | **İletişim** | `/iletisim/` adresli sayfa otomatik olarak yeni İletişim düzenini kullanır (adres değişmez). Sayfa yoksa önerilen kurulum oluşturur. Bilgileri *Özelleştir › İletişim ve sosyal medya*'dan girin (aşağıya bakın). |
 
@@ -144,6 +144,9 @@ Bütün bilgiler tek yerden yönetilir: **Görünüm › Özelleştir › KTÜ E
 Alanlar boşken tema kodundaki yer tutucular (`[EMAIL]`, `[INSTAGRAM_URL]`, `[LINKEDIN_URL]`, `[GOOGLE_MAPS_EMBED_URL]`, `[GOOGLE_MAPS_DIRECTIONS_URL]`, dosya: `inc/contact.php`) kullanılır. Bu durumda ziyaretçiler kartta "Yakında eklenecek" görür; yöneticiler hangi ayarın eksik olduğunu ve ayar bağlantısını görür. Sayfa açıklaması *Ana sayfa ve bölüm metinleri › İletişim sayfası açıklaması* alanından veya sayfanın **Özet** alanından değiştirilebilir.
 
 **Menü:** Üst menüde ve alt bilgide sıra *Ana Sayfa, Yazılar, Projeler, Etkinlikler, Hakkımızda, İletişim* şeklindedir. Sitede atanmış bir menü varsa ve İletişim bağlantısı içermiyorsa, tema güncellendikten sonra panelde çıkan **önerilen kurulum** kutusu yeni bir "KTÜ EHK Ana Menü" oluşturup üst menü ve alt bilgiye atar (eski menü silinmez). Elle yapmak isterseniz *Görünüm › Menüler*'den İletişim sayfasını menünün sonuna ekleyin.
+
+### İçerik yokken
+Henüz yazı veya proje yoksa ana sayfadaki "Öne Çıkan Projeler" ve "Son Teknik Yazılar" bölümleri tamamen gizlenir; Yazılar sayfası "Henüz yazı eklenmedi.", Projeler sayfası "Henüz proje eklenmedi." mesajını gösterir (filtreler ve arama kutusu da gizlenir). Tema ve eklenti örnek yazı veya proje oluşturmaz; eklenti yalnızca boş seçim listeleri için program, alan ve etkinlik türü terimlerini bir kez ekler.
 
 ### Hakkımızda sayfası
 Metinler normal sayfa içeriğidir ve editörden değiştirilebilir. Dinamik bölümler kısa kodlarla eklenir ve istenen yere taşınabilir:

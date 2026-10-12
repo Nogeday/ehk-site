@@ -20,7 +20,7 @@ get_template_part(
 		'eyebrow' => __( 'YAZILAR', 'ktuehk' ),
 		'title'   => $ktuehk_title,
 		'desc'    => $ktuehk_desc,
-		'after'   => static function () {
+		'after'   => ! ktuehk_count( 'post' ) ? null : static function () {
 			get_search_form(
 				array(
 					'post_type'   => 'post',

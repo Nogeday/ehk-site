@@ -739,12 +739,15 @@ label { font-weight: 500; }
 	background: #fff;
 	box-shadow: 0 1px 2px rgba(4, 18, 42, 0.2);
 }
-.brand__mark {
-	width: 40px;
-	height: 40px;
-	color: var(--mark-color, var(--c-primary));
+.brand__emblem {
+	flex: none;
+	width: 46px;
+	height: 46px;
+	border-radius: 50%;
+	background: #fff;
 }
-.brand--footer .brand__mark { color: #fff; }
+.brand--footer .brand__emblem,
+.header-blue .brand--header .brand__emblem { box-shadow: 0 0 0 3px #fff; }
 .brand__text {
 	display: flex;
 	flex-direction: column;
@@ -1555,6 +1558,16 @@ label { font-weight: 500; }
 
 /* About page content */
 .about-content > :where(p, h2, h3, h4, ul, ol, blockquote) { max-width: var(--reading); }
+/* Tables line up with the paragraphs: same left edge, same width; wide
+   tables scroll inside their own box (.table-scroll) on small screens. */
+.about-content > :where(.wp-block-table, figure:has(table), .table-scroll, table) {
+	width: 100%;
+	max-width: var(--reading);
+	margin-left: 0;
+	margin-right: 0;
+}
+.about-content > :where(.wp-block-table, figure:has(table)) .table-scroll { max-width: 100%; }
+.about-content .wp-block-table table { width: 100%; }
 .about-content > h2 {
 	margin-top: 64px;
 	font-size: var(--fs-h2);

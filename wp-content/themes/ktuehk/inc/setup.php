@@ -388,3 +388,19 @@ function ktuehk_same_as() {
 	return wp_list_pluck( ktuehk_social_links(), 'url' );
 }
 add_filter( 'ktuehk_core_same_as', 'ktuehk_same_as' );
+
+/**
+ * Default site icon (club emblem) until a Site Icon is chosen under
+ * Görünüm › Özelleştir › Site kimliği.
+ */
+function ktuehk_default_site_icon() {
+	if ( has_site_icon() ) {
+		return;
+	}
+	printf( '<link rel="icon" href="%s" sizes="32x32">' . "\n", esc_url( KTUEHK_URI . '/assets/images/favicon-32.png' ) );
+	printf( '<link rel="icon" href="%s" sizes="192x192">' . "\n", esc_url( KTUEHK_URI . '/assets/images/ktuehk-logo-192.png' ) );
+	printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( KTUEHK_URI . '/assets/images/apple-touch-icon.png' ) );
+}
+add_action( 'wp_head', 'ktuehk_default_site_icon', 99 );
+add_action( 'admin_head', 'ktuehk_default_site_icon', 99 );
+add_action( 'login_head', 'ktuehk_default_site_icon', 99 );

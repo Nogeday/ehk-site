@@ -104,7 +104,7 @@ function ktuehk_address_lines() {
 		'ktuehk_address_lines',
 		array(
 			__( 'Karadeniz Teknik Üniversitesi', 'ktuehk' ),
-			__( 'Teknoloji Fakültesi', 'ktuehk' ),
+			__( 'Of Teknoloji Fakültesi', 'ktuehk' ),
 			__( 'Elektronik ve Haberleşme Mühendisliği', 'ktuehk' ),
 		)
 	);

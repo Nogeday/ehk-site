@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       KTÜ EHK Çekirdek
  * Description:       KTÜ Elektronik ve Haberleşme Kulübü sitesi için içerik modeli: Projeler, Etkinlikler, proje/etkinlik alanları, yazar bilgisi ve temel SEO/schema çıktısı. İçerik temadan bağımsız saklanır; tema değişse bile kaybolmaz.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            KTÜ EHK
@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'KTUEHK_CORE_VERSION', '1.0.0' );
+define( 'KTUEHK_CORE_VERSION', '1.0.1' );
 define( 'KTUEHK_CORE_FILE', __FILE__ );
 define( 'KTUEHK_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'KTUEHK_CORE_URL', plugin_dir_url( __FILE__ ) );

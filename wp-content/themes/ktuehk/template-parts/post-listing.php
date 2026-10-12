@@ -34,6 +34,17 @@ if ( have_posts() ) :
 	</div>
 	<?php
 	ktuehk_pagination();
+elseif ( ! ktuehk_count( 'post' ) ) :
+	get_template_part(
+		'template-parts/empty-state',
+		null,
+		array(
+			'icon'       => 'file-text',
+			'title'      => __( 'Henüz yazı eklenmedi.', 'ktuehk' ),
+			'admin_link' => admin_url( 'post-new.php' ),
+			'admin_text' => __( 'Yeni yazı ekle', 'ktuehk' ),
+		)
+	);
 else :
 	get_template_part(
 		'template-parts/empty-state',
