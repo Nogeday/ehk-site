@@ -404,3 +404,36 @@ function ktuehk_default_site_icon() {
 add_action( 'wp_head', 'ktuehk_default_site_icon', 99 );
 add_action( 'admin_head', 'ktuehk_default_site_icon', 99 );
 add_action( 'login_head', 'ktuehk_default_site_icon', 99 );
+
+/**
+ * Comment form: no "İnternet sitesi" (website) field; name and e-mail stay.
+ * The cookie consent text no longer mentions a website address.
+ *
+ * @param array $fields Default comment form fields.
+ * @return array
+ */
+function ktuehk_comment_form_fields( $fields ) {
+	unset( $fields['url'] );
+	if ( isset( $fields['cookies'] ) ) {
+		$commenter         = wp_get_current_commenter();
+		$fields['cookies'] = sprintf(
+			'<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"%1$s> <label for="wp-comment-cookies-consent">%2$s</label></p>',
+			empty( $commenter['comment_author_email'] ) ? '' : ' checked="checked"',
+			esc_html__( 'Adımı ve e-posta adresimi bir sonraki yorumum için bu tarayıcıya kaydet.', 'ktuehk' )
+		);
+	}
+	return $fields;
+}
+add_filter( 'comment_form_default_fields', 'ktuehk_comment_form_fields' );
+
+/**
+ * Ignore a website address sent to the comment form anyway (e.g. by bots).
+ *
+ * @param array $data Comment data.
+ * @return array
+ */
+function ktuehk_strip_comment_url( $data ) {
+	$data['comment_author_url'] = '';
+	return $data;
+}
+add_filter( 'preprocess_comment', 'ktuehk_strip_comment_url' );
